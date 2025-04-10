@@ -1,0 +1,54 @@
+<nb-layout>
+    <nb-layout-column>
+      <div class="login-wrapper">
+        <nb-card class="login-card">
+          <nb-card-header>
+            <div class="logo-container">
+              <img src="logo-odonto-legal.png" alt="Logo Odonto-Legal" class="logo-img" />
+            </div>
+            <h2 class="login-title">Acesso a plataforma</h2>
+          </nb-card-header>
+  
+          <nb-card-body>
+            <form class="login-form" [formGroup]="loginForm">
+              <div class="form-group">
+                <nb-icon icon="email-outline"></nb-icon>
+                <input nbInput formControlName="email" fullWidth placeholder="E-mail" type="email" />
+              </div>
+            
+              <div class="form-group">
+                <nb-icon icon="lock-outline"></nb-icon>
+                <input nbInput fullWidth formControlName="password" placeholder="Senha" type="password" />
+              </div>
+            
+              <button type="button" nbButton status="primary" fullWidth class="login-button" (click)="onSubmit($event, loginForm.value)">Entrar</button>
+  
+              <div class="divider">
+                <span>ou entre com</span>
+              </div>
+  
+              <div class="social-buttons">
+                <button nbButton hero status="danger">
+                  <nb-icon icon="google"></nb-icon>
+                  Google
+                </button>
+                <button nbButton hero status="info">
+                  <nb-icon icon="facebook"></nb-icon>
+                  Facebook
+                </button>
+                <button nbButton hero status="basic">
+                  <nb-icon icon="github"></nb-icon>
+                  GitHub
+                </button>
+              </div>
+            </form>
+          </nb-card-body>
+  
+          <nb-card-footer>
+            <a href="#" class="forgot">Esqueceu a senha?</a>
+          </nb-card-footer>
+        </nb-card>
+      </div>
+    </nb-layout-column>
+  </nb-layout>
+  

@@ -1,0 +1,20 @@
+@import '@nebular/theme/styles/prebuilt/corporate.css';
+
+.swal2-toast-mobile {
+    font-size: 1rem;
+    padding: 1rem 1.2rem !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    max-width: 400px;
+  }
+  
+  .swal2-icon {
+    transform: scale(0.8); // menorzinho no mobile
+  }
+  
+  .swal2-toast .swal2-title {
+    font-size: 1.1rem;
+    text-align: center;
+    word-wrap: break-word;
+  }
+  
