@@ -2,12 +2,12 @@
   <div class="container is-fluid">
     <!-- Cabeçalho e ações -->
     <div class="columns is-vcentered is-mobile is-multiline mb-4" style="padding-top: 1.7rem;">
-      <div class="column is-12-mobile is-6-tablet">
+      <div class="column is-12-mobile is-10-tablet">
         <h1 class="title is-4">Gerenciador de Usuários</h1>
       </div>
 
-      <div class="column is-12-mobile is-6-tablet has-text-right">
-        <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" size="small">
+      <div class="column is-12-mobile is-2-tablet has-text-right">
+        <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" size="small">
           <nb-icon icon="person-add-outline" pack="eva"></nb-icon>
           Novo Usuário
         </button>
@@ -17,11 +17,11 @@
     <!-- Filtro único -->
     <div class="box mb-5">
       <div class="columns is-multiline">
-        <div class="column is-12-mobile is-9-tablet">
+        <div class="column is-12-mobile is-10-tablet">
           <input nbInput fullWidth placeholder="Buscar por nome ou e-mail..." [(ngModel)]="filters.query">
         </div>
-        <div class="column is-12-mobile is-3-tablet has-text-right">
-          <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" size="small" (click)="filterUsers()">
+        <div class="column is-12-mobile is-2-tablet has-text-right">
+          <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" (click)="filterUsers()">
             <nb-icon icon="search-outline"></nb-icon>
             Filtrar
           </button>
@@ -33,22 +33,24 @@
     <div class="box user-list">
       <div *ngFor="let user of users" class="box user-card">
         <div class="columns is-vcentered is-mobile">
-          <div class="column is-2 has-text-centered">
+          <div class="column is-1-desktop is-2-mobile has-text-centered">
+
             <nb-icon icon="person-outline" pack="eva" class="user-avatar"></nb-icon>
           </div>
 
-          <div class="column is-7">
-            <p class="is-size-6 has-text-weight-bold">{{ user.name }}</p>
-            <p class="is-size-7 has-text-grey">{{ user.email }}</p>
+          <div class="column is-8-desktop" style="margin-left: 0.6rem;">
+            <p class="is-size-6 has-text-weight-bold mb-1">{{ user.name }}</p>
+            <p class="is-size-7 has-text-grey mb-1">{{ user.email }}</p>
+            <p class="is-size-7 has-text-info" style="font-family: cursive;"><strong>{{ user.role }}</strong></p>
           </div>
 
           <div class="column is-3 has-text-right">
-            <button nbButton size="tiny" status="warning" (click)="editUser(user)">
+            <button nbButton size="small" class="action-button edit" style="border-style: groove;border-radius: 3px;" (click)="editUser(user)">
               <nb-icon icon="edit-2-outline"></nb-icon>
             </button>
-            <button nbButton size="tiny" status="danger" (click)="deleteUser(user)">
+            <button nbButton size="small" status="danger" style="border-style: groove;border-radius: 3px;margin-bottom:5px;" class="action-button" (click)="deleteUser(user)">
               <nb-icon icon="trash-2-outline"></nb-icon>
-            </button>
+            </button>            
           </div>
         </div>
       </div>
@@ -69,9 +71,9 @@
           <nb-icon icon="arrow-back-outline"></nb-icon>
           <span>Anterior</span>
         </a>
-    
+
         <span class="pagination-current">Página {{ currentPage }}</span>
-    
+
         <a 
           class="pagination-button" 
           (click)="nextPage()" 
@@ -83,7 +85,5 @@
         </a>
       </div>
     </nav>
-    
-    
   </div>
 </div>

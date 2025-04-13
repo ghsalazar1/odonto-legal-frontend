@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
 })
 export class UsersComponent {
   users = [
-    { name: 'João Silva', email: 'joao@email.com' },
-    { name: 'Maria Santos', email: 'maria@email.com' },
-    { name: 'Carlos Pereira', email: 'carlos@email.com' },
+    { name: 'João Silva', email: 'joao@email.com', role: 'Perito' },
+    { name: 'Maria Santos', email: 'maria@email.com', role: 'Administrador' },
+    { name: 'Carlos Pereira', email: 'carlos@email.com', role: 'Assistente' },
   ];
 
   filters = {

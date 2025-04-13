@@ -112,3 +112,51 @@
     }
   }
 }
+
+.action-button {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  nb-icon {
+    font-size: 1.1rem;
+  }
+
+  &.edit {
+    background-color:#babdbc !important;
+    border: none;
+    color: #333;
+  }
+
+  @media (min-width: 769px) {
+    width: 48px;
+    height: 48px;
+
+    nb-icon {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.action-button.edit {
+  margin-right: 0; 
+  margin-bottom:5px;
+
+  @media (min-width: 590px) {
+    margin-right:7px; 
+  }
+
+  @media (min-width: 567px) {
+    margin-right:3px; 
+  }
+}
+
+
+
+.full-width-button {
+  width: 100%;
+  display: block;
+}
