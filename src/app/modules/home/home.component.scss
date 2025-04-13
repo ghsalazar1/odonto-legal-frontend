@@ -24,18 +24,18 @@ nb-layout-header {
       border-radius: 4px;
       cursor: pointer;
       transition: all 0.3s ease;
-      text-decoration: none;         // ✅ remove sublinhado
-      color: inherit;                // ✅ herda cor para manter consistência
-      background-color: transparent; // opcional: zera fundo em todos os casos
+      text-decoration: none;         
+      color: inherit;                
+      background-color: transparent; 
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.06); // sombra clara
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); // sombra sutil
+        background-color: rgba(0, 0, 0, 0.06);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       }
 
       .email-icon {
         font-size: 1.1rem;
-        color: #3366ff; // Azul tema corporate
+        color: #3366ff;
       }
 
       .email-text {
@@ -107,7 +107,8 @@ nb-layout-column {
 
 .page-content {
   background-color: #ffffff;
-  padding: 2rem;
   border-radius: 0.5rem;
+  margin-left: 1.7rem;
+  padding-bottom: 2rem;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }

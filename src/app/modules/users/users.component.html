@@ -1,55 +1,89 @@
-<div class="container mt-4">
-  <!-- Cabeçalho e ação -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Gerenciador de Usuários</h4>
-    <button class="btn btn-primary">
-      <i class="bi bi-person-plus me-2"></i> Adicionar Usuário
-    </button>
-  </div>
+<div class="section" style="padding:0px;">
+  <div class="container is-fluid">
+    <!-- Cabeçalho e ações -->
+    <div class="columns is-vcentered is-mobile is-multiline mb-4" style="padding-top: 1.7rem;">
+      <div class="column is-12-mobile is-6-tablet">
+        <h1 class="title is-4">Gerenciador de Usuários</h1>
+      </div>
 
-  <!-- Filtros -->
-  <div class="row mb-3 g-2">
-    <div class="col-md-4">
-      <input type="text" class="form-control" placeholder="Filtrar por nome" />
+      <div class="column is-12-mobile is-6-tablet has-text-right">
+        <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" size="small">
+          <nb-icon icon="person-add-outline" pack="eva"></nb-icon>
+          Novo Usuário
+        </button>
+      </div>
     </div>
-    <div class="col-md-4">
-      <input type="email" class="form-control" placeholder="Filtrar por e-mail" />
-    </div>
-    <div class="col-md-4">
-      <button class="btn btn-outline-secondary w-100">
-        <i class="bi bi-funnel-fill me-1"></i> Filtrar
-      </button>
-    </div>
-  </div>
 
-  <!-- Tabela -->
-  <div class="table-responsive">
-    <table class="table table-hover table-bordered align-middle text-center">
-      <thead class="table-light">
-        <tr>
-          <th>#</th>
-          <th>Nome</th>
-          <th>E-mail</th>
-          <th>Perfil</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.role }}</td>
-          <td>
-            <button class="btn btn-outline-primary btn-sm me-2" title="Editar">
-              <i class="bi bi-pencil-square fs-5"></i>
+    <!-- Filtro único -->
+    <div class="box mb-5">
+      <div class="columns is-multiline">
+        <div class="column is-12-mobile is-9-tablet">
+          <input nbInput fullWidth placeholder="Buscar por nome ou e-mail..." [(ngModel)]="filters.query">
+        </div>
+        <div class="column is-12-mobile is-3-tablet has-text-right">
+          <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" size="small" (click)="filterUsers()">
+            <nb-icon icon="search-outline"></nb-icon>
+            Filtrar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de usuários responsiva -->
+    <div class="box user-list">
+      <div *ngFor="let user of users" class="box user-card">
+        <div class="columns is-vcentered is-mobile">
+          <div class="column is-2 has-text-centered">
+            <nb-icon icon="person-outline" pack="eva" class="user-avatar"></nb-icon>
+          </div>
+
+          <div class="column is-7">
+            <p class="is-size-6 has-text-weight-bold">{{ user.name }}</p>
+            <p class="is-size-7 has-text-grey">{{ user.email }}</p>
+          </div>
+
+          <div class="column is-3 has-text-right">
+            <button nbButton size="tiny" status="warning" (click)="editUser(user)">
+              <nb-icon icon="edit-2-outline"></nb-icon>
             </button>
-            <button class="btn btn-outline-danger btn-sm" title="Excluir">
-              <i class="bi bi-trash fs-5"></i>
+            <button nbButton size="tiny" status="danger" (click)="deleteUser(user)">
+              <nb-icon icon="trash-2-outline"></nb-icon>
             </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="users.length === 0" class="has-text-centered has-text-grey-light">
+        Nenhum usuário encontrado.
+      </div>
+    </div>
+
+    <nav class="pagination-wrapper" aria-label="Paginação de usuários">
+      <div class="pagination-controls">
+        <a 
+          class="pagination-button" 
+          (click)="previousPage()" 
+          [class.is-disabled]="currentPage === 1"
+          style="text-decoration: none;"
+        >
+          <nb-icon icon="arrow-back-outline"></nb-icon>
+          <span>Anterior</span>
+        </a>
+    
+        <span class="pagination-current">Página {{ currentPage }}</span>
+    
+        <a 
+          class="pagination-button" 
+          (click)="nextPage()" 
+          [class.is-disabled]="!hasMore"
+          style="text-decoration: none;"
+        >
+          <span>Próximo</span>
+          <nb-icon icon="arrow-forward-outline"></nb-icon>
+        </a>
+      </div>
+    </nav>
+    
+    
   </div>
 </div>
