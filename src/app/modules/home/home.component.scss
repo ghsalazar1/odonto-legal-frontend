@@ -1,0 +1,113 @@
+nb-layout-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #edf1f7;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    padding: 0 1.5rem;
+    width: 100%;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .contact-email {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;         // ✅ remove sublinhado
+      color: inherit;                // ✅ herda cor para manter consistência
+      background-color: transparent; // opcional: zera fundo em todos os casos
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.06); // sombra clara
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); // sombra sutil
+      }
+
+      .email-icon {
+        font-size: 1.1rem;
+        color: #3366ff; // Azul tema corporate
+      }
+
+      .email-text {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: #1a2138;
+      }
+    }
+
+    .pipe {
+      color: #8f9bb3;
+      font-size: 1.2rem;
+    }
+
+    nb-user ::ng-deep .user-name {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #1a2138;
+      text-transform: capitalize;
+    }
+
+    nb-user ::ng-deep .user-picture {
+      border-radius: 50%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .email-text,
+    .pipe,
+    ::ng-deep nb-user .user-name {
+      display: none;
+    }
+  }
+
+  .left-branding {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  
+    .logo-img {
+      height: 36px;
+      width: auto;
+    }
+  }
+  
+}
+
+nb-sidebar.custom-sidebar {
+  background-color: #f7f9fc;
+  border-right: 1px solid #edf1f7;
+  color: #1a2138;
+}
+
+nb-layout-column {
+  background-color: #f1f2f7;
+  padding: 2rem;
+
+  h2 {
+    color: #222b45;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    color: #8f9bb3;
+  }
+}
+
+.page-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,41 @@
+.header-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  
+    input {
+      flex: 1;
+    }
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+  
+    th,
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid #edf1f7;
+    }
+  
+    th {
+      text-align: left;
+      font-weight: 600;
+      color: #1a2138;
+    }
+  
+    td {
+      color: #4a4a4a;
+    }
+  
+    nb-icon {
+      vertical-align: middle;
+    }
+  
+    button + button {
+      margin-left: 0.5rem;
+    }
+  }
+  

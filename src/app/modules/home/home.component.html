@@ -1,13 +1,49 @@
-<nb-layout>
-    <nb-layout-header fixed>Odonto-Legal</nb-layout-header>
-  
-    <nb-sidebar>Menu</nb-sidebar>
-  
-    <nb-layout-column>
-      <h2>Bem-vindo à Home!</h2>
-      <p>Esta é a área protegida do sistema.</p>
-    </nb-layout-column>
-  
-    <nb-layout-footer fixed>Rodapé</nb-layout-footer>
-  </nb-layout>
-  
+<nb-layout windowMode>
+  <!-- HEADER -->
+  <nb-layout-header fixed>
+    <div class="header-container">
+      
+      <!-- Botão para toggle sidebar + logo -->
+      <div class="left-branding">
+        <button nbButton ghost class="menu-toggle" (click)="toggleSidebar()">
+          <nb-icon icon="menu-2-outline"></nb-icon>
+        </button>
+        <div class="" (click)="homeRedirect()" style="cursor: pointer;">
+          <img src="logo-header.png" alt="Odonto-Legal" style="height: 60px; margin-left: -20px;" />
+          <span style="font-weight: bold;">Odonto-Legal</span>
+        </div>
+      </div>
+
+      
+
+      <!-- Elementos do lado direito -->
+      <div class="right-section">
+        <a class="contact-email" href="mailto:contato@odontolegal.com.br">
+          <nb-icon icon="email-outline" class="email-icon"></nb-icon>
+          <span class="email-text">{{'contato@odontolegal.com.br'}}</span>
+        </a>
+        <span class="pipe">|</span>
+
+        <nb-user
+          name="Nick Jones"
+          [picture]="'https://i.pravatar.cc/300?img=12'"
+          [nbContextMenu]="userMenu"
+          size="medium"
+          ></nb-user>
+
+      </div>
+    </div>
+  </nb-layout-header>
+
+  <!-- SIDEBAR -->
+  <nb-sidebar tag="menu-sidebar" [state]="sidebarState" class="custom-sidebar">
+    <nb-menu [items]="menuItems"></nb-menu>
+  </nb-sidebar>
+
+  <!-- CONTEÚDO -->
+  <nb-layout-column>
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nb-layout-column>
+</nb-layout>
