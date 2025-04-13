@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from '../../guards/auth.guard';
-import { UsersComponent } from '../users/users.component';
+import { ListUsersComponent } from '../users/list/list-users.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
       {
         path: 'users',
         loadChildren: () =>
-          import('../users/users.module').then((m) => m.UsersModule),
+          import('../users/list/list-users.module').then((m) => m.UsersModule),
       },
 
       {

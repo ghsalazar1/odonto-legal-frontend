@@ -21,7 +21,7 @@
           <input nbInput fullWidth placeholder="Buscar por nome ou e-mail..." [(ngModel)]="filters.query">
         </div>
         <div class="column is-12-mobile is-2-tablet has-text-right">
-          <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" (click)="filterUsers()">
+          <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" (click)="applyFilters()">
             <nb-icon icon="search-outline"></nb-icon>
             Filtrar
           </button>
@@ -41,7 +41,7 @@
           <div class="column is-8-desktop" style="margin-left: 0.9rem;">
             <p class="is-size-6 has-text-weight-bold mb-1">{{ user.name }}</p>
             <p class="is-size-7 has-text-grey mb-1">{{ user.email }}</p>
-            <p class="is-size-7 has-text-info" style="font-family: cursive;"><strong>{{ user.role }}</strong></p>
+            <p class="is-size-7 has-text-info" style="font-family: cursive;"><strong>{{ user?.role?.description }}</strong></p>
           </div>
 
           <div class="column is-3 has-text-right">
