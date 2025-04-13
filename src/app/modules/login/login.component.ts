@@ -30,8 +30,7 @@ export class LoginComponent {
     else{
       this.authService.login(inputs.email, inputs.password).subscribe({
         next: () => {
-          this.toast.showSuccess('Login realizado com sucesso!');
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/dashboard']);
         },
         error: (err) => {
           this.toast.showError(err.error.error ?? 'Ocorreu um erro durante a tentativa de login.');

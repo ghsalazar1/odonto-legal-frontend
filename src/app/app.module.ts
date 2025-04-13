@@ -9,6 +9,10 @@ import {
   NbLayoutModule,
   NbSidebarModule,
   NbButtonModule,
+  NbMenuModule,
+  NbContextMenuModule,
+  NbUserModule,
+  NbTreeGridModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -22,11 +26,10 @@ import { AppRoutingModule } from './app-routing-module';
     BrowserAnimationsModule,
     AppRoutingModule,
     NbThemeModule.forRoot({ name: 'corporate' }),
-    NbLayoutModule,
     HttpClientModule,
     NbSidebarModule.forRoot(),
-    NbButtonModule,
-    NbEvaIconsModule,
+    NbMenuModule.forRoot(),
+    NbTreeGridModule,
   ],
   bootstrap: [AppComponent],
   providers: [

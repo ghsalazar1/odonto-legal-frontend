@@ -7,7 +7,15 @@ import {
   NbLayoutModule,
   NbSidebarModule,
   NbCardModule,
+  NbMenuModule,
+  NbActionsModule,
+  NbUserModule,
+  NbContextMenuModule,
+  NbButtonModule,
+  NbIconModule,
+  NbTreeGridModule,
 } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -16,7 +24,15 @@ import {
     HomeRoutingModule,
     NbLayoutModule,
     NbSidebarModule,
+    NbEvaIconsModule,
+    NbActionsModule,
+    NbUserModule,
+    NbContextMenuModule,
+    NbButtonModule,
+    NbIconModule,
+    NbMenuModule,
     NbCardModule,
+    NbTreeGridModule,
   ],
 })
 export class HomeModule {}
