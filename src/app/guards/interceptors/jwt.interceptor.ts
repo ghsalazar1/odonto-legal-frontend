@@ -20,7 +20,6 @@ export class JwtInterceptor implements HttpInterceptor {
 
     let authReq = req;
 
-    // Se existir token, adiciona no cabeçalho
     if (token) {
       authReq = req.clone({
         setHeaders: {
@@ -31,7 +30,6 @@ export class JwtInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        // Se der 401 (não autorizado), pode forçar logout
         if (error.status === 401) {
           this.authService.logout();
           this.router.navigate(['/login']);

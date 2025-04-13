@@ -3,34 +3,39 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss'],
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent {
-  filter = '';
-
   users = [
-    { name: 'João Silva', email: 'joao@email.com', role: 'Admin' },
-    { name: 'Maria Lima', email: 'maria@email.com', role: 'Usuário' },
-    { name: 'Carlos Souza', email: 'carlos@email.com', role: 'Moderador' },
+    { name: 'João Silva', email: 'joao@email.com', role: 'Perito' },
+    { name: 'Maria Santos', email: 'maria@email.com', role: 'Administrador' },
+    { name: 'Carlos Pereira', email: 'carlos@email.com', role: 'Assistente' },
   ];
-  
 
-  get filteredUsers() {
-    if (!this.filter) return this.users;
-    return this.users.filter(user =>
-      user.name.toLowerCase().includes(this.filter.toLowerCase())
-    );
+  filters = {
+    query: ''
+  };
+
+  currentPage = 1;
+  hasMore = true;
+
+  filterUsers() {
+    console.log('Filtro aplicado:', this.filters);
   }
 
-  onAddUser() {
-    console.log('Novo usuário');
+  editUser(user: any) {
+    console.log('Editar usuário:', user);
   }
 
-  onEdit(user: any) {
-    console.log('Editar', user);
+  deleteUser(user: any) {
+    console.log('Excluir usuário:', user);
   }
 
-  onDelete(user: any) {
-    console.log('Excluir', user);
+  previousPage() {
+    if (this.currentPage > 1) this.currentPage--;
+  }
+
+  nextPage() {
+    this.currentPage++;
   }
 }

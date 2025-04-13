@@ -1,5 +1,10 @@
 @import '@nebular/theme/styles/prebuilt/corporate.css';
 
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 .swal2-toast-mobile {
     font-size: 1rem;
     padding: 1rem 1.2rem !important;
@@ -9,7 +14,7 @@
   }
   
   .swal2-icon {
-    transform: scale(0.8); // menorzinho no mobile
+    transform: scale(0.8);
   }
   
   .swal2-toast .swal2-title {
