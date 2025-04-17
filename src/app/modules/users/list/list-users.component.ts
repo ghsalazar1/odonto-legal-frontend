@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.services';
-import { PaginatedResponseDTO } from '../../../models/pagination-response-dto';
+import { ResponseDTO } from '../../../models/response-dto';
 import { UserDTO } from '../../../models/user-model';
+import { UntypedFormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -11,69 +13,81 @@ import { UserDTO } from '../../../models/user-model';
 export class ListUsersComponent implements OnInit {
   users: UserDTO[] = [];
 
-  filters = {
-    query: ''
-  };
-
   currentPage = 1;
   limit = 10;
   hasMore = true;
-
   isLoading = false;
+  filterForm: any;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router, private formBuilder: UntypedFormBuilder,) {}
 
   ngOnInit(): void {
-    this.getAllUsers();
+    this.filterForm = this.formBuilder.group({
+      query: ['']
+    });
+    this.fetchUsers();
   }
 
-  getAllUsers(): void {
+  /**
+   * Monta e envia a requisição para buscar os usuários
+   */
+  fetchUsers(): void {
     this.isLoading = true;
-
+    var fields = this.filterForm.value;
     const params = {
-      search: this.filters.query,
+      search: fields.query,
       page: this.currentPage,
       limit: this.limit
     };
 
+    console.log(params)
+
     this.userService.getUsers(params).subscribe({
-      next: (response: PaginatedResponseDTO<UserDTO>) => {
+      next: (response: ResponseDTO<UserDTO>) => {
         this.users = response.data;
         const totalPages = Math.ceil(response.meta.total / this.limit);
         this.hasMore = this.currentPage < totalPages;
-        this.isLoading = false;
       },
       error: (err) => {
         console.error('Erro ao buscar usuários:', err);
+      },
+      complete: () => {
         this.isLoading = false;
       }
     });
   }
 
+
+  redirectToAddPage(): void {
+    this.router.navigate(['/home/users/register'])
+  }
+
   applyFilters(): void {
     this.currentPage = 1;
-    this.getAllUsers();
+    this.fetchUsers();
   }
 
-  editUser(user: UserDTO) {
-    console.log('Editar usuário:', user);
-  }
-
-  deleteUser(user: UserDTO) {
-    console.log('Excluir usuário:', user);
-  }
-
-  previousPage() {
+  previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.getAllUsers();
+      this.fetchUsers();
     }
   }
 
-  nextPage() {
+  nextPage(): void {
     if (this.hasMore) {
       this.currentPage++;
-      this.getAllUsers();
+      this.fetchUsers();
     }
+  }
+
+  editUser(user: UserDTO): void {
+    console.log('Editar usuário:', user);
+    // Implementar navegação ou abrir modal de edição
+  }
+
+  deleteUser(user: UserDTO): void {
+    console.log('Excluir usuário:', user);
+    // Implementar confirmação e exclusão
   }
 }

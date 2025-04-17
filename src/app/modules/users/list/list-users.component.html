@@ -2,12 +2,11 @@
   <div class="container is-fluid">
     <!-- Cabeçalho e ações -->
     <div class="columns is-vcentered is-mobile is-multiline mb-4" style="padding-top: 1.7rem;">
-      <div class="column is-12-mobile is-10-tablet">
-        <h1 class="title is-4">Gerenciador de Usuários</h1>
+      <div class="column is-12-mobile is-10-tablet" style="padding-bottom: 0px;;">
+        <h2 class="title is-4" style="margin-bottom: 0px;;">Gerenciador de Usuários</h2>
       </div>
-
-      <div class="column is-12-mobile is-2-tablet has-text-right">
-        <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" size="small">
+      <div class="column is-7-mobile is-2-tablet has-text-right">
+        <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" size="small" (click)="redirectToAddPage()">
           <nb-icon icon="person-add-outline" pack="eva"></nb-icon>
           Adicionar
         </button>
@@ -16,41 +15,57 @@
 
     <!-- Filtro único -->
     <div class="box mb-5">
-      <div class="columns is-multiline">
-        <div class="column is-12-mobile is-10-tablet">
-          <input nbInput fullWidth placeholder="Buscar por nome ou e-mail..." [(ngModel)]="filters.query">
+      <form [formGroup]="filterForm">
+        <div class="columns is-multiline">
+          <div class="column is-12-mobile is-10-tablet">
+            <input nbInput fullWidth placeholder="Buscar por nome ou e-mail..." formControlName="query">
+          </div>
+          <div class="column is-12-mobile is-2-tablet has-text-right">
+            <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" (click)="applyFilters()">
+              <nb-icon icon="search-outline"></nb-icon>
+              Filtrar
+            </button>
+          </div>
         </div>
-        <div class="column is-12-mobile is-2-tablet has-text-right">
-          <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" (click)="applyFilters()">
-            <nb-icon icon="search-outline"></nb-icon>
-            Filtrar
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
 
     <!-- Lista de usuários responsiva -->
     <div class="box user-list">
       <div *ngFor="let user of users" class="box user-card">
-        <div class="columns is-vcentered is-mobile">
-          <div class="column is-1-desktop is-2-mobile has-text-centered">
-
-            <nb-icon icon="person-outline" pack="eva" class="user-avatar"></nb-icon>
+        <div class="columns is-vcentered multiline-only-mobile">
+          <div class="column is-12-mobile is-flex user-info-wrapper">
+            <div class="avatar-container">
+              <nb-icon icon="person-outline" pack="eva" class="user-avatar"></nb-icon>
+            </div>
+          
+            <div class="info-container">
+              <p class="is-size-6 has-text-weight-bold mb-1">{{ user.name }}</p>
+              <p class="is-size-7 has-text-grey mb-1">{{ user.email }}</p>
+              <p class="is-size-7 has-text-info"><strong>{{ user?.role?.description }}</strong></p>
+            </div>
           </div>
+          
 
-          <div class="column is-8-desktop" style="margin-left: 0.9rem;">
-            <p class="is-size-6 has-text-weight-bold mb-1">{{ user.name }}</p>
-            <p class="is-size-7 has-text-grey mb-1">{{ user.email }}</p>
-            <p class="is-size-7 has-text-info" style="font-family: cursive;"><strong>{{ user?.role?.description }}</strong></p>
-          </div>
-
-          <div class="column is-3 has-text-right">
+          <div class="column is-3 has-text-right is-hidden-mobile">
             <button nbButton size="small" class="action-button edit" style="border-style: groove;border-radius: 3px;" (click)="editUser(user)">
               <nb-icon icon="edit-2-outline"></nb-icon>
             </button>
             <button nbButton size="small" status="danger" style="border-style: groove;border-radius: 3px;margin-bottom:5px;" class="action-button" (click)="deleteUser(user)">
               <nb-icon icon="trash-2-outline"></nb-icon>
             </button>            
+          </div>
+
+          <div class="column is-12 is-hidden-desktop is-hidden-tablet">
+            <button nbButton size="small" class="action-button full-width-button" style="border-style: groove;border-radius: 3px;" (click)="editUser(user)">
+              <nb-icon icon="edit-2-outline"></nb-icon>
+            </button>
+          </div>
+
+          <div class="column is-12 is-hidden-desktop is-hidden-tablet" style="padding-top: 0px;">
+            <button nbButton size="small" status="danger" style="border-style: groove;border-radius: 3px;margin-bottom:5px;" class="action-button full-width-button" (click)="deleteUser(user)">
+              <nb-icon icon="trash-2-outline"></nb-icon>
+            </button>          
           </div>
         </div>
       </div>
@@ -66,8 +81,7 @@
           class="pagination-button" 
           (click)="previousPage()" 
           [class.is-disabled]="currentPage === 1"
-          style="text-decoration: none;"
-        >
+          style="text-decoration: none;" >
           <nb-icon icon="arrow-back-outline"></nb-icon>
           <span>Anterior</span>
         </a>
@@ -78,8 +92,7 @@
           class="pagination-button" 
           (click)="nextPage()" 
           [class.is-disabled]="!hasMore"
-          style="text-decoration: none;"
-        >
+          style="text-decoration: none;">
           <span>Próximo</span>
           <nb-icon icon="arrow-forward-outline"></nb-icon>
         </a>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { Environment } from '../../environments/environment';
-import { PaginatedResponseDTO } from '../models/pagination-response-dto';
+import { ResponseDTO } from '../models/response-dto';
 import { UserDTO } from '../models/user-model';
+import { RoleDTO } from '../models/role-model';
 
 interface LoginResponse {
   token: string;
@@ -11,11 +12,31 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+
   private readonly apiUrl = Environment.BackendURL + '/users';  
 
   constructor(private http: HttpClient) {}
 
-  getUsers(params: any): Observable<PaginatedResponseDTO<UserDTO>> {
-    return this.http.get<PaginatedResponseDTO<UserDTO>>(this.apiUrl, { params });
+  getUsers(params: any): Observable<ResponseDTO<UserDTO>> {
+    return this.http.get<ResponseDTO<UserDTO>>(this.apiUrl, { params });
+  }
+  
+  createUser(payload: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    roleId: string;
+  }): Observable<ResponseDTO<UserDTO>> {
+    return this.http.post<ResponseDTO<UserDTO>>(`${this.apiUrl}/register`, payload);
+  }
+  
+  getRoles(): Observable<RoleDTO[]> {
+    const roles: RoleDTO[] = [
+      { id: '1', description: 'Administrador' },
+      { id: '2', description: 'Perito' },
+      { id: '3', description: 'Assistente' }
+    ];
+    return of(roles);
   }
 }
