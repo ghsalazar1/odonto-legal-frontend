@@ -1,0 +1,89 @@
+<div class="section" style="padding-top: 2rem">
+    <div class="container">
+      <!-- Título e volta -->
+      <div class="columns is-vcentered mb-5">
+        <div class="column is-12-mobile is-6-tablet">
+          <h2 class="title is-4">Novo Usuário</h2>
+        </div>
+        <div class="column is-12-mobile is-6-tablet has-text-right">
+          <button nbButton routerLink="/home/users" status="basic">Voltar</button>
+        </div>
+      </div>
+  
+      <!-- Formulário -->
+      <nb-card>
+        <nb-card-body>
+          <form [formGroup]="userForm">
+            <div class="columns is-multiline">
+              <!-- Nome -->
+              <div class="column is-12-mobile is-6-tablet">
+                <label class="label">Nome</label>
+                <input nbInput placeholder="Nome completo" formControlName="name" fullWidth />
+                <p class="help is-danger" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+                  O nome é obrigatório.
+                </p>
+              </div>
+          
+              <!-- Email -->
+              <div class="column is-12-mobile is-6-tablet">
+                <label class="label">E-mail</label>
+                <input nbInput placeholder="E-mail" formControlName="email" fullWidth type="email" />
+                <p class="help is-danger" *ngIf="userForm.get('email')?.errors?.['required'] && userForm.get('email')?.touched">
+                  O e-mail é obrigatório.
+                </p>
+                <p class="help is-danger" *ngIf="userForm.get('email')?.errors?.['email'] && userForm.get('email')?.touched">
+                  Informe um e-mail válido.
+                </p>
+              </div>
+          
+              <!-- Perfil -->
+              <div class="column is-12-mobile is-6-tablet">
+                <label class="label">Perfil</label>
+                <nb-select placeholder="Selecione o perfil" formControlName="roleId" fullWidth>
+                  <nb-option *ngFor="let role of roles" [value]="role.id">{{ role.description }}</nb-option>
+                </nb-select>
+                <p class="help is-danger" *ngIf="userForm.get('roleId')?.invalid && userForm.get('roleId')?.touched">
+                  Selecione um perfil.
+                </p>
+              </div>
+          
+              <!-- Senha -->
+              <div class="column is-12-mobile is-6-tablet">
+                <label class="label">Senha</label>
+                <input nbInput placeholder="Senha" formControlName="password" fullWidth type="password" />
+                <p class="help is-danger" *ngIf="userForm.get('password')?.errors?.['required'] && userForm.get('password')?.touched">
+                  A senha é obrigatória.
+                </p>
+                <p class="help is-danger" *ngIf="userForm.get('password')?.errors?.['minlength'] && userForm.get('password')?.touched">
+                  A senha deve ter no mínimo 6 caracteres.
+                </p>
+              </div>
+          
+              <!-- Confirmação da Senha -->
+              <div class="column is-12-mobile is-6-tablet">
+                <label class="label">Repetir Senha</label>
+                <input nbInput placeholder="Confirme a senha" formControlName="confirmPassword" fullWidth type="password" />
+                <p class="help is-danger" *ngIf="userForm?.errors?.['passwordsMismatch'] && userForm.get('confirmPassword')?.touched">
+                  As senhas não coincidem.
+                </p>
+                
+              </div>
+          
+              <!-- Botão -->
+              <div class="column is-12-mobile is-6-tablet is-flex is-align-items-end is-justify-content-end">
+                <button 
+                  (click)="addNewUser(userForm.value)" 
+                  nbButton 
+                  [disabled]="userForm.invalid || loading" 
+                  style="background-color: #4BCCA6; border-color: #4BCCA6; color: black">
+                  <nb-icon icon="checkmark-outline"></nb-icon>
+                  Salvar
+                </button>
+              </div>
+            </div>
+          </form>          
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  

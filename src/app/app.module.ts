@@ -13,6 +13,7 @@ import {
   NbContextMenuModule,
   NbUserModule,
   NbTreeGridModule,
+  NbIconModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -30,6 +31,7 @@ import { AppRoutingModule } from './app-routing-module';
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbTreeGridModule,
+    NbIconModule
   ],
   bootstrap: [AppComponent],
   providers: [

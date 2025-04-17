@@ -1,6 +1,6 @@
 import { PaginationMeta } from "./pagination-meta";
 
-export interface PaginatedResponseDTO<T> {
+export interface ResponseDTO<T> {
     hasError: boolean;
     message: string;
     data: T[];

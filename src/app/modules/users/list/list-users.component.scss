@@ -160,3 +160,27 @@
   width: 100%;
   display: block;
 }
+
+.user-info-wrapper {
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.avatar-container {
+  flex-shrink: 0; // não deixa o avatar diminuir
+}
+
+.info-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.info-container p {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto; // opcional, para melhorar quebra em algumas línguas
+}
+

@@ -1,0 +1,7 @@
+button[nbbutton]:disabled {
+    background-color: #ccc !important; // cinza claro
+    border-color: #ccc !important;
+    color: #666 !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
