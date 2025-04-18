@@ -14,9 +14,10 @@ import {
   NbOptionModule,
   NbIconModule,
 } from '@nebular/theme';
+import { EditUserComponent } from './edit/edit-user.component';
 
 @NgModule({
-  declarations: [ListUsersComponent, RegisterUserComponent],
+  declarations: [ListUsersComponent, RegisterUserComponent, EditUserComponent],
   imports: [
     CommonModule,
     FormsModule,

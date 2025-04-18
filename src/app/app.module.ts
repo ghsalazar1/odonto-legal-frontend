@@ -14,6 +14,7 @@ import {
   NbUserModule,
   NbTreeGridModule,
   NbIconModule,
+  NbToastrModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';

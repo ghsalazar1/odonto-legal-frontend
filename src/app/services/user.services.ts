@@ -17,18 +17,30 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(params: any): Observable<ResponseDTO<UserDTO>> {
-    return this.http.get<ResponseDTO<UserDTO>>(this.apiUrl, { params });
+  getUsers(params: any): Observable<ResponseDTO<UserDTO[]>> {
+    return this.http.get<ResponseDTO<UserDTO[]>>(this.apiUrl, { params });
+  }
+
+  deleteUser(userId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
+  }
+
+  getUserById(id: string): Observable<ResponseDTO<UserDTO>> {
+    return this.http.get<ResponseDTO<UserDTO>>(`${this.apiUrl}/${id}`);
   }
   
-  createUser(payload: {
+  updateUser(id: string, payload: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, payload);
+  }
+  
+  add(payload: {
     name: string;
     email: string;
     password: string;
     confirmPassword: string;
     roleId: string;
   }): Observable<ResponseDTO<UserDTO>> {
-    return this.http.post<ResponseDTO<UserDTO>>(`${this.apiUrl}/register`, payload);
+    return this.http.post<ResponseDTO<UserDTO>>(`${this.apiUrl}`, payload);
   }
   
   getRoles(): Observable<RoleDTO[]> {
