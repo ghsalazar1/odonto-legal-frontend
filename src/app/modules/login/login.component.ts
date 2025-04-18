@@ -4,6 +4,7 @@ import { Login } from '../../models/login-model';
 import { ToastAlert } from '../../helpers/toast-alert';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent {
 
   onSubmit(event: Event, inputs: Login): void {
     if(this.controls['email'].errors || this.controls['password'].errors){
-      this.toast.showWarnig("Dados de autenticação inválidos.");
+      this.toast.showWarnig("Verifique e-mail e senha.");
+      
     }
     else{
       this.authService.login(inputs.email, inputs.password).subscribe({

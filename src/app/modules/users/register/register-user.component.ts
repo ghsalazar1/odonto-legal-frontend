@@ -55,7 +55,7 @@ export class RegisterUserComponent implements OnInit {
     const { name, email, roleId, password } = this.userForm.value;
 
     this.loading = true;
-    this.userService.createUser({
+    this.userService.add({
       name, email, roleId, password,
       confirmPassword: ''
     }).subscribe({

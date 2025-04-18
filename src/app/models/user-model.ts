@@ -6,4 +6,4 @@ export interface UserDTO {
     email: string;
     roleId: string;
     role: RoleDTO;
-  }
+}

@@ -9,6 +9,7 @@ import {
   NbButtonModule,
   NbIconModule,
   NbLayoutModule,
+  NbToastrModule,
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { LoginRoutingModule } from './login-routing.module';
@@ -24,7 +25,7 @@ import { LoginRoutingModule } from './login-routing.module';
     NbInputModule,
     NbButtonModule,
     NbIconModule,
-    NbEvaIconsModule,
+    NbEvaIconsModule
   ],
 })
 export class LoginModule {}

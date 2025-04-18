@@ -23,3 +23,38 @@ body {
     word-wrap: break-word;
   }
   
+
+  .swal2-toast-mobile {
+    font-size: 0.85rem;
+    max-width: 90vw;
+    padding: 0.5rem 1rem;
+  }
+  
+
+  @media screen and (max-width: 480px) {
+    .login-card {
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  
+    .nb-card-body {
+      padding: 1rem !important;
+    }
+  }
+  // Estilo customizado para toasts de aviso
+.nb-theme-default nb-toast.status-warning {
+  background-color: #f9f2d6 !important; // amarelo claro
+  color: #5c5c5c !important; // texto mais suave
+  border-left: 4px solid #f5c542 !important;
+}
+
+.nb-theme-default nb-toast.status-success {
+  background-color: #e1f8e6 !important;
+  color: #357a38 !important;
+  border-left: 4px solid #56d18f !important;
+}
+
+
+.swal2-title {
+  margin: 0px !important;
+}

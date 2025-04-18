@@ -3,7 +3,7 @@
       <!-- Título e volta -->
       <div class="columns is-vcentered mb-5">
         <div class="column is-12-mobile is-6-tablet">
-          <h2 class="title is-4">Novo Usuário</h2>
+            <h2 class="title is-4">Editar Usuário</h2>
         </div>
         <div class="column is-12-mobile is-6-tablet has-text-right">
           <button nbButton routerLink="/home/users" status="basic">Voltar</button>
@@ -72,12 +72,12 @@
               <!-- Botão -->
               <div class="column is-12-mobile is-6-tablet is-flex is-align-items-end is-justify-content-end">
                 <button 
-                  (click)="addNewUser(userForm.value)" 
-                  nbButton 
-                  [disabled]="userForm.invalid || loading" 
-                  style="background-color: #4BCCA6; border-color: #4BCCA6; color: white">
-                  <nb-icon icon="checkmark-outline"></nb-icon>
-                  Salvar
+                    (click)="saveChanges()" 
+                    nbButton 
+                    [disabled]="userForm.invalid || loading"
+                    style="background-color: #4BCCA6; border-color: #4BCCA6; color: white">
+                    <nb-icon icon="checkmark-outline"></nb-icon>
+                    Salvar Alterações
                 </button>
               </div>
             </div>

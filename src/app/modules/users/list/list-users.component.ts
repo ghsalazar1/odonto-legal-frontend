@@ -4,6 +4,8 @@ import { ResponseDTO } from '../../../models/response-dto';
 import { UserDTO } from '../../../models/user-model';
 import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastAlert } from '../../../helpers/toast-alert';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -18,6 +20,7 @@ export class ListUsersComponent implements OnInit {
   hasMore = true;
   isLoading = false;
   filterForm: any;
+  toast: ToastAlert = new ToastAlert();
 
   constructor(private userService: UserService, private router: Router, private formBuilder: UntypedFormBuilder,) {}
 
@@ -28,9 +31,6 @@ export class ListUsersComponent implements OnInit {
     this.fetchUsers();
   }
 
-  /**
-   * Monta e envia a requisição para buscar os usuários
-   */
   fetchUsers(): void {
     this.isLoading = true;
     var fields = this.filterForm.value;
@@ -40,10 +40,8 @@ export class ListUsersComponent implements OnInit {
       limit: this.limit
     };
 
-    console.log(params)
-
     this.userService.getUsers(params).subscribe({
-      next: (response: ResponseDTO<UserDTO>) => {
+      next: (response: ResponseDTO<UserDTO[]>) => {
         this.users = response.data;
         const totalPages = Math.ceil(response.meta.total / this.limit);
         this.hasMore = this.currentPage < totalPages;
@@ -82,12 +80,34 @@ export class ListUsersComponent implements OnInit {
   }
 
   editUser(user: UserDTO): void {
-    console.log('Editar usuário:', user);
-    // Implementar navegação ou abrir modal de edição
+    this.router.navigate(['/home/users/edit', user.id]);
   }
 
   deleteUser(user: UserDTO): void {
-    console.log('Excluir usuário:', user);
-    // Implementar confirmação e exclusão
+    Swal.fire({
+      title: 'Confirmação',
+      text: `Confirme a exclusão do usuário ${user.name}.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Excluir',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(user.id).subscribe({
+          next: () => {
+            this.toast.showSuccess(`Usuário ${user.name} excluído com sucesso.`);
+            this.fetchUsers();
+          },
+          error: (err) => {
+            var _message = err?.error?.message;
+            if(_message){
+              this.toast.showError(_message);
+            }
+          }
+        });
+      }
+    });
   }
 }
