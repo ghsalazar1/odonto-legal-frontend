@@ -1,0 +1,151 @@
+.case-list-wrapper {
+  padding: 2rem 1rem;
+}
+
+.case-card {
+  position: relative;
+  transition: box-shadow 0.3s ease;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 0px;;
+}
+
+.status-bar {
+  width: 6px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #ccc;
+}
+
+.case-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  flex: 1;
+}
+
+.case-description {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.case-meta small {
+  color: #888;
+}
+
+.case-actions button:not(:last-child) {
+  margin-right: 0.3rem;
+}
+
+.custom-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  background-color: rgba(0,0,0,0.05);
+}
+
+/* Status cores */
+.case-card.info .status-bar { background-color: #17a2b8; }
+.case-card.success .status-bar { background-color: #28a745; }
+.case-card.warning .status-bar { background-color: #ffc107; }
+
+/* Legenda de status */
+.legend {
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-item .bullet {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-item.info .bullet {
+  background-color: #17a2b8;
+}
+.legend-item.success .bullet {
+  background-color: #28a745;
+}
+.legend-item.warning .bullet {
+  background-color: #ffc107;
+}
+
+/* Altura igual dos cards */
+.column > .case-card.equal-height {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pagination-wrapper {
+  margin-top: 2rem;
+}
+
+.pagination-link.is-current {
+  background-color: #4BCCA6;
+  color: #fff;
+  border-color: #4BCCA6;
+}
+
+.search-input input {
+  border: 2px solid #ccc;
+  border-radius: 999px;
+  background-color: #f9f9f9;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.search-input input:focus {
+  border-color: #4BCCA6;
+  background-color: #fff;
+  outline: none;
+}
+
+.search-input .icon.is-left {
+  left: 1rem;
+  color: #999;
+  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #888;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.no-results nb-icon {
+  font-size: 2rem;
+  color: #ffc107;
+}

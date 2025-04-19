@@ -21,8 +21,8 @@ export class HomeComponent {
 
   menuItems = [
     { title: 'Dashboard', icon: 'home-outline', link: '/home/dashboard' },
-    { title: 'Gestão de Casos', icon: 'folder-outline', link: '/home/casos' },
-    { title: 'Relatórios', icon: 'bar-chart-outline', link: '/home/relatorios' },
+    { title: 'Gestão de Casos', icon: 'folder-outline', link: '/home/cases' },
+    { title: 'Relatórios', icon: 'bar-chart-outline', link: '/home/reports' },
     { title: 'Usuários', icon: 'people-outline', link: '/home/users' },
   ];
 

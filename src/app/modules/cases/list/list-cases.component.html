@@ -1,0 +1,90 @@
+<div class="case-list-wrapper section">
+  <div class="container">
+    <div class="columns is-vcentered is-mobile mb-4" style="margin-bottom: 0px !important;">
+      <div class="column is-8-mobile is-6-tablet">
+        <h2 class="title is-4" style="margin-bottom: .3rem;">Casos Periciais</h2>
+      </div>
+      <div class="column is-4-mobile is-6-tablet has-text-right" style="padding-right: 1.5rem;">
+        <button nbButton status="success">
+          <nb-icon icon="plus-circle-outline"></nb-icon>
+          Novo Caso
+        </button>
+      </div>
+    </div>
+
+    <!-- Campo de Busca -->
+    <div class="field mb-5 search-input">
+      <div class="control">
+        <input
+          nbInput
+          fullWidth
+          placeholder="🔍 Filtrar casos por título, status ou datas"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearch()"
+        />
+      </div>
+    </div>
+
+    <!-- Mensagem de Nenhum Registro Encontrado -->
+    <div *ngIf="paginatedCasos.length === 0" class="no-results">
+      <nb-icon icon="alert-circle-outline" status="warning"></nb-icon>
+      <p>Nenhum caso encontrado com os critérios informados.</p>
+    </div>
+
+    <div class="columns is-multiline" *ngIf="paginatedCasos.length > 0">
+      <div class="column is-12-mobile is-6-tablet is-4-desktop" *ngFor="let caso of paginatedCasos">
+        <nb-card class="case-card equal-height" [ngClass]="getStatusClass(caso.status)">
+          <div class="status-bar"></div>
+
+          <nb-card-header>
+            <div class="case-title">{{ caso.title }}</div>
+            <div class="custom-badge">
+              <nb-icon [icon]="getStatusIcon(caso.status)"></nb-icon>
+              <span>{{ caso.status }}</span>
+            </div>
+          </nb-card-header>
+
+          <nb-card-body>
+            <div class="case-description">{{ caso.description }}</div>
+            <div class="case-meta mt-3">
+              <small>Abertura: {{ caso.openedAt | date:'dd/MM/yyyy' }}</small><br />
+              <small *ngIf="caso.closedAt">Fechado: {{ caso.closedAt | date:'dd/MM/yyyy' }}</small>
+            </div>
+          </nb-card-body>
+
+          <nb-card-footer class="is-flex is-justify-content-space-between is-align-items-center">
+            <nb-select placeholder="Status" [(selected)]="caso.status" (selectedChange)="onStatusChange(caso)">
+              <nb-option *ngFor="let s of statusList" [value]="s">{{ s }}</nb-option>
+            </nb-select>
+            <div class="case-actions">
+              <button nbButton size="small" status="primary"><nb-icon icon="eye-outline" style="width:1.3rem;"></nb-icon></button>
+              <button nbButton size="small" status="warning"><nb-icon icon="edit-2-outline" style="width:1.3rem;"></nb-icon></button>
+              <button nbButton size="small" status="danger"><nb-icon icon="trash-2-outline" style="width:1.3rem;"></nb-icon></button>
+            </div>
+          </nb-card-footer>
+        </nb-card>
+      </div>
+    </div>
+
+    <!-- Paginação -->
+    <div class="pagination-wrapper mt-5" *ngIf="totalPages > 1">
+      <nav class="pagination is-centered" role="navigation">
+        <a class="pagination-previous" (click)="changePage(currentPage - 1)" [class.is-disabled]="currentPage === 1">Anterior</a>
+        <a class="pagination-next" (click)="changePage(currentPage + 1)" [class.is-disabled]="currentPage === totalPages">Próximo</a>
+        <ul class="pagination-list">
+          <li *ngFor="let page of totalPagesArray">
+            <a class="pagination-link" [ngClass]="{'is-current': page === currentPage}" (click)="changePage(page)">{{ page }}</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Legenda de Status -->
+    <div class="legend mt-6"  *ngIf="paginatedCasos.length > 0" style="margin-top:1rem !important">
+      <strong>Legenda:</strong>
+      <div class="legend-item info"><span class="bullet"></span> Em andamento</div>
+      <div class="legend-item success"><span class="bullet"></span> Finalizado</div>
+      <div class="legend-item warning"><span class="bullet"></span> Arquivado</div>
+    </div>
+  </div>
+</div>
