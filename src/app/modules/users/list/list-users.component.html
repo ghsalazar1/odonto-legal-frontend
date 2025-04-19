@@ -17,13 +17,12 @@
     <div class="box mb-5">
       <form [formGroup]="filterForm">
         <div class="columns is-multiline">
-          <div class="column is-12-mobile is-10-tablet">
+          <div class="column is-12-mobile is-11-tablet">
             <input nbInput fullWidth placeholder="Buscar por nome ou e-mail..." formControlName="query">
           </div>
-          <div class="column is-12-mobile is-2-tablet has-text-right">
+          <div class="column is-12-mobile is-1-tablet has-text-right">
             <button nbButton style="background-color: #4BCCA6; border-color: #4BCCA6; color: white" class="full-width-button" (click)="applyFilters()">
               <nb-icon icon="search-outline"></nb-icon>
-              Filtrar
             </button>
           </div>
         </div>

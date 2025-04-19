@@ -5,42 +5,27 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.swal2-toast-mobile {
-    font-size: 1rem;
-    padding: 1rem 1.2rem !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    max-width: 400px;
-  }
   
-  .swal2-icon {
-    transform: scale(0.8);
-  }
-  
-  .swal2-toast .swal2-title {
-    font-size: 1.1rem;
-    text-align: center;
-    word-wrap: break-word;
-  }
-  
+.swal2-icon {
+  transform: scale(0.8);
+}
 
-  .swal2-toast-mobile {
-    font-size: 0.85rem;
-    max-width: 90vw;
-    padding: 0.5rem 1rem;
-  }
-  
+.swal2-toast .swal2-title {
+  font-size: 1.1rem;
+  text-align: center;
+  word-wrap: break-word;
+}
 
-  @media screen and (max-width: 480px) {
-    .login-card {
-      padding: 1rem;
-      font-size: 0.9rem;
-    }
-  
-    .nb-card-body {
-      padding: 1rem !important;
-    }
+@media screen and (max-width: 480px) {
+  .login-card {
+    padding: 1rem;
+    font-size: 0.9rem;
   }
+
+  .nb-card-body {
+    padding: 1rem !important;
+  }
+}
   // Estilo customizado para toasts de aviso
 .nb-theme-default nb-toast.status-warning {
   background-color: #f9f2d6 !important; // amarelo claro
