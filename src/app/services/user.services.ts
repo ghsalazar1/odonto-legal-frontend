@@ -21,6 +21,10 @@ export class UserService {
     return this.http.get<ResponseDTO<UserDTO[]>>(this.apiUrl, { params });
   }
 
+  getAll(): Observable<ResponseDTO<UserDTO[]>> {
+    return this.http.get<ResponseDTO<UserDTO[]>>(this.apiUrl, { });
+  }
+
   deleteUser(userId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }

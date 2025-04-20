@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-cases',
@@ -36,6 +37,10 @@ export class ListCasesComponent {
   paginatedCasos = [...this.casos];
   currentPage = 1;
   itemsPerPage = 6;
+
+  constructor(private router: Router) {
+    
+  }
 
   get totalPages(): number {
     return Math.ceil(this.filteredCasos.length / this.itemsPerPage);
@@ -97,5 +102,9 @@ export class ListCasesComponent {
 
   onStatusChange(caso: any) {
     console.log('Status atualizado:', caso);
+  }
+
+  redirectToRegister(){
+    this.router.navigate(["/home/cases/register"]);
   }
 }
