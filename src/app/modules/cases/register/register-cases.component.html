@@ -1,1 +1,114 @@
-<p>register works!</p>
+<div class="section">
+  <div class="container">
+    <h2 class="title is-4 mb-4">Novo Caso Pericial</h2>
+
+    <nb-card>
+      <nb-card-body>
+        <form (ngSubmit)="submitCase()">
+
+          <!-- Título e Descrição -->
+          <div class="field">
+            <label class="label">Título</label>
+            <div class="control">
+              <input nbInput fullWidth placeholder="Informe o título do caso" [(ngModel)]="form.title" name="title" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Descrição</label>
+            <div class="control">
+              <textarea nbInput fullWidth placeholder="Descreva os detalhes do caso" [(ngModel)]="form.description" name="description" rows="3"></textarea>
+            </div>
+          </div>
+
+          <!-- Datas -->
+          <div class="columns">
+            <div class="column">
+              <label class="label">Data do caso</label>
+              <input nbInput fullWidth type="date" [(ngModel)]="form.caseDate" name="caseDate" required />
+            </div>
+            <div class="column">
+              <label class="label">Data de abertura</label>
+              <input nbInput fullWidth type="date" [(ngModel)]="form.openedAt" name="openedAt" />
+            </div>
+          </div>
+
+          <!-- Perito Principal -->
+          <div class="field">
+            <label class="label">Perito Principal</label>
+            <div class="control">
+              <nb-select fullWidth [(selected)]="form.peritoPrincipalId" placeholder="Selecione">
+                <nb-option *ngFor="let user of users" [value]="user.id">
+                  <nb-user size="small" [name]="user.name" [picture]="user.avatar"></nb-user>
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+
+          <!-- Participantes com Filtro -->
+          <div class="field">
+            <label class="label">Participantes</label>
+
+            <div class="field mb-3">
+              <div class="control has-icons-left">
+                <input nbInput fullWidth placeholder="🔍 Filtrar por nome"
+                      [(ngModel)]="participantFilter" name="participantFilter" />
+              </div>
+            </div>
+
+            <div class="is-flex is-flex-wrap-wrap is-justify-content-start">
+              <label *ngFor="let user of filteredParticipants()"
+                    class="tag is-rounded is-light is-clickable m-1"
+                    [class.is-primary]="form.participants.includes(user.id)"
+                    (click)="toggleParticipant(user.id)">
+                <nb-user size="tiny" [name]="user.name" [picture]="user.avatar"></nb-user>
+              </label>
+            </div>
+          </div>
+
+
+
+          <!-- Evidências -->
+          <div class="field mb-4">
+            <label class="label">Evidências</label>
+            <div class="buttons">
+              <button nbButton status="info" (click)="capturePhoto()" type="button">
+                <nb-icon icon="camera-outline"></nb-icon> Capturar Foto
+              </button>
+              <input type="file" accept="image/*,audio/*,.pdf" multiple hidden #fileInput (change)="onFileSelected($event)" />
+              <button nbButton status="basic" (click)="fileInput.click()" type="button">
+                <nb-icon icon="cloud-upload-outline"></nb-icon> Adicionar Arquivos
+              </button>
+            </div>
+
+            <!-- Preview -->
+            <div class="columns is-multiline mt-3">
+              <div class="column is-6-mobile is-3-tablet" *ngFor="let file of form.evidences">
+                <nb-card>
+                  <nb-card-body class="p-2">
+                    <img *ngIf="file.preview" [src]="file.preview" class="image is-128x128" style="object-fit: cover;" />
+                    <p class="has-text-centered is-size-7 mt-2">{{ file.name }}</p>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão de salvar -->
+          <div class="has-text-centered mt-5">
+            <button 
+              nbButton 
+              [disabled]="form.title.trim() === '' || loading"
+              (click)="submitCase()"
+              style="background-color: #4BCCA6; border-color: #4BCCA6; color: white; width: 100%;line-height: 2rem;">
+              <nb-icon icon="checkmark-circle-2-outline" pack="eva"></nb-icon>
+              Salvar Caso
+            </button>
+          </div>
+          
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
