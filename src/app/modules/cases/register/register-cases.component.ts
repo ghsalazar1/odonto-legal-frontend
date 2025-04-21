@@ -3,6 +3,7 @@ import { CasesService } from '../../../services/cases.service';
 import { UserService } from '../../../services/user.services';
 import { CaseForm } from '../../../models/case-model';
 import { ToastAlert } from '../../../helpers/toast-alert';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-cases',
@@ -20,7 +21,8 @@ export class RegisterCasesComponent {
 
   constructor(
     private casesService: CasesService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.loadUsers();
     this.form = {
@@ -161,7 +163,10 @@ export class RegisterCasesComponent {
     });
 
     this.casesService.create(formData).subscribe({
-      next: () => this.toast.showSuccess('Caso criado com sucesso!'),
+      next: () => {
+        this.toast.showSuccess('Caso criado com sucesso!');
+        this.router.navigate(['/home/cases'])
+      },
       error: (err) => {
         const _defaultMessage = 'não foi possível cadastrar o novo caso.';
         if(err && err?.error && err?.error?.message){

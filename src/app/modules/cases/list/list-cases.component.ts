@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CasesService } from '../../../services/cases.service';
+import { CaseDTO } from '../../../models/case-model';
+import Swal from 'sweetalert2';
+import { ToastAlert } from '../../../helpers/toast-alert';
 
 @Component({
   selector: 'app-list-cases',
@@ -9,38 +13,37 @@ import { Router } from '@angular/router';
 export class ListCasesComponent {
   statusList = ['Em andamento', 'Finalizado', 'Arquivado'];
   searchTerm = '';
-  casos = [
-    {
-      title: 'Identificação de Vítima 001',
-      description: 'Análise de radiografia e histórico odontológico.',
-      status: 'Em andamento',
-      openedAt: new Date('2024-04-01'),
-      closedAt: null
-    },
-    {
-      title: 'Exame Criminal 002',
-      description: 'Coleta de evidências em cena de crime envolvendo vítima com implantes.',
-      status: 'Finalizado',
-      openedAt: new Date('2024-03-15'),
-      closedAt: new Date('2024-03-25')
-    },
-    {
-      title: 'Acidente Veicular 003',
-      description: 'Análise de arcada dentária para identificação em colisão frontal.',
-      status: 'Arquivado',
-      openedAt: new Date('2024-02-10'),
-      closedAt: new Date('2024-02-25')
-    }
-  ];
-
+  casos: CaseDTO[] = [];
   filteredCasos = [...this.casos];
-  paginatedCasos = [...this.casos];
+  paginatedCasos: CaseDTO[] = [...this.casos];
   currentPage = 1;
   itemsPerPage = 6;
+  toast: ToastAlert;
 
-  constructor(private router: Router) {
-    
+  constructor(private router: Router, private casesService: CasesService) {
+    this.fetchCases();
+    this.toast = new ToastAlert();
   }
+
+  fetchCases(page = 1, search = '') {
+    this.casesService.fetch(page, this.itemsPerPage, search).subscribe({
+      next: (response) => {
+        this.casos = response.data;
+        this.filteredCasos = [...this.casos];
+        this.currentPage = response.meta.currentPage;
+        this.paginate();
+      },
+      error: (err) => {
+        const _defaultMessage = 'não foi possível carregar a lista de casos.';
+        if(err && err?.error && err?.error?.message){
+          this.toast.showError(err?.error?.message ?? _defaultMessage);
+        }else{
+          this.toast.showError(_defaultMessage);
+        }
+      }
+    });
+  }
+  
 
   get totalPages(): number {
     return Math.ceil(this.filteredCasos.length / this.itemsPerPage);
@@ -56,11 +59,17 @@ export class ListCasesComponent {
       c.title.toLowerCase().includes(term) ||
       c.description.toLowerCase().includes(term) ||
       c.status.toLowerCase().includes(term) ||
+      c.peritoPrincipal?.name.toLowerCase().includes(term) || 
       (c.openedAt && new Date(c.openedAt).toLocaleDateString().includes(term)) ||
+      (c.caseDate && new Date(c.caseDate).toLocaleDateString().includes(term)) ||
       (c.closedAt && new Date(c.closedAt).toLocaleDateString().includes(term))
     );
     this.currentPage = 1;
     this.paginate();
+  }
+
+  editCase(caso: CaseDTO): void {
+    this.router.navigate(['/home/cases/edit', caso.id]);
   }
 
   changePage(page: number) {
@@ -102,6 +111,36 @@ export class ListCasesComponent {
 
   onStatusChange(caso: any) {
     console.log('Status atualizado:', caso);
+  }
+
+  deleteCase(caseObj: CaseDTO) {
+    Swal.fire({
+      title: caseObj?.title,
+      text: 'Essa ação irá excluir o caso de forma permanente.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sim, excluir',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.casesService.delete(caseObj.id).subscribe({
+          next: () => {
+            Swal.fire('Excluído!', 'O caso foi removido com sucesso.', 'success');
+            this.fetchCases();
+          },
+          error: (err) => {
+            const _defaultMessage = 'não foi possível excluir o caso.';
+            if(err && err?.error && err?.error?.message){
+              this.toast.showError(err?.error?.message ?? _defaultMessage);
+            }else{
+              this.toast.showError(_defaultMessage);
+            }
+          }
+        });
+      }
+    });
   }
 
   redirectToRegister(){
