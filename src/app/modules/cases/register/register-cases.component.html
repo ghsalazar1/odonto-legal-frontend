@@ -4,18 +4,18 @@
 
     <nb-card>
       <nb-card-body>
-        <form (ngSubmit)="submitCase()">
+        <form>
 
           <!-- Título e Descrição -->
           <div class="field">
-            <label class="label">Título</label>
+            <label class="label">Título<span style="color:red;">*</span></label>
             <div class="control">
               <input nbInput fullWidth placeholder="Informe o título do caso" [(ngModel)]="form.title" name="title" required />
             </div>
           </div>
 
           <div class="field">
-            <label class="label">Descrição</label>
+            <label class="label">Descrição<span style="color:red;">*</span></label>
             <div class="control">
               <textarea nbInput fullWidth placeholder="Descreva os detalhes do caso" [(ngModel)]="form.description" name="description" rows="3"></textarea>
             </div>
@@ -24,12 +24,12 @@
           <!-- Datas -->
           <div class="columns">
             <div class="column">
-              <label class="label">Data do caso</label>
-              <input nbInput fullWidth type="date" [(ngModel)]="form.caseDate" name="caseDate" required />
+              <label class="label">Data do acontecimento<span style="color:red;">*</span></label>
+              <input nbInput fullWidth type="date" [(ngModel)]="form.caseDate" name="caseDate" [max]="today" required />
             </div>
             <div class="column">
-              <label class="label">Data de abertura</label>
-              <input nbInput fullWidth type="date" [(ngModel)]="form.openedAt" name="openedAt" />
+              <label class="label">Data de abertura<span style="color:red;">*</span></label>
+              <input nbInput fullWidth type="date" [(ngModel)]="form.openedAt" name="openedAt" [max]="today" required disabled="" />
             </div>
           </div>
 
@@ -38,10 +38,11 @@
             <label class="label">Perito Principal</label>
             <div class="control">
               <nb-select fullWidth [(selected)]="form.peritoPrincipalId" placeholder="Selecione">
-                <nb-option *ngFor="let user of users" [value]="user.id">
+                <nb-option *ngFor="let user of availablePeritos()" [value]="user.id">
                   <nb-user size="small" [name]="user.name" [picture]="user.avatar"></nb-user>
                 </nb-option>
               </nb-select>
+              
             </div>
           </div>
 
@@ -66,16 +67,14 @@
             </div>
           </div>
 
-
-
           <!-- Evidências -->
           <div class="field mb-4">
             <label class="label">Evidências</label>
-            <div class="buttons">
+            <div class="buttons mb-2">
               <button nbButton status="info" (click)="capturePhoto()" type="button">
                 <nb-icon icon="camera-outline"></nb-icon> Capturar Foto
               </button>
-              <input type="file" accept="image/*,audio/*,.pdf" multiple hidden #fileInput (change)="onFileSelected($event)" />
+              <input type="file" accept="image/*,audio/*,.pdf,.doc,.docx" multiple hidden #fileInput (change)="onFileSelected($event)" />
               <button nbButton status="basic" (click)="fileInput.click()" type="button">
                 <nb-icon icon="cloud-upload-outline"></nb-icon> Adicionar Arquivos
               </button>
@@ -83,16 +82,30 @@
 
             <!-- Preview -->
             <div class="columns is-multiline mt-3">
-              <div class="column is-6-mobile is-3-tablet" *ngFor="let file of form.evidences">
-                <nb-card>
-                  <nb-card-body class="p-2">
-                    <img *ngIf="file.preview" [src]="file.preview" class="image is-128x128" style="object-fit: cover;" />
-                    <p class="has-text-centered is-size-7 mt-2">{{ file.name }}</p>
+              <div class="column is-12-mobile is-3-tablet" *ngFor="let file of form.evidences">
+                <nb-card style="margin-bottom: 0px !important;">
+                  <nb-card-body class="p-2 has-text-centered">
+
+                    <!-- Imagem -->
+                    <img *ngIf="file.type.startsWith('image/')" [src]="file.preview" class="image is-128x128" style="object-fit: cover;" />
+
+                    <!-- PDF -->
+                    <nb-icon *ngIf="file.type === 'application/pdf'" icon="file-text-outline" pack="eva" class="is-size-1"></nb-icon>
+
+                    <!-- Áudio -->
+                    <nb-icon *ngIf="file.type.startsWith('audio/')" icon="music-outline" pack="eva" class="is-size-1"></nb-icon>
+
+                    <!-- Outro tipo -->
+                    <nb-icon *ngIf="!file.type.startsWith('image/') && !file.type.startsWith('audio/') && file.type !== 'application/pdf'" icon="file-outline" pack="eva" class="is-size-1"></nb-icon>
+
+                    <!-- Nome -->
+                    <p class="is-size-7 mt-2">{{ file.name }}</p>
                   </nb-card-body>
                 </nb-card>
               </div>
             </div>
           </div>
+
 
           <!-- Botão de salvar -->
           <div class="has-text-centered mt-5">
@@ -105,7 +118,6 @@
               Salvar Caso
             </button>
           </div>
-          
 
         </form>
       </nb-card-body>
