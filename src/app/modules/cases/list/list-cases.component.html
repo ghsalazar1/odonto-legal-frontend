@@ -47,8 +47,11 @@
           <nb-card-body>
             <div class="case-description">{{ caso.description }}</div>
             <div class="case-meta mt-3">
+              <small>Ocorrido: {{ caso.caseDate | date:'dd/MM/yyyy' }}</small><br />
               <small>Abertura: {{ caso.openedAt | date:'dd/MM/yyyy' }}</small><br />
               <small *ngIf="caso.closedAt">Fechado: {{ caso.closedAt | date:'dd/MM/yyyy' }}</small>
+              <br/>
+              <small><b>Perito principal: </b> {{ caso.peritoPrincipal?.name ?? '-'}}</small>
             </div>
           </nb-card-body>
 
@@ -57,9 +60,8 @@
               <nb-option *ngFor="let s of statusList" [value]="s">{{ s }}</nb-option>
             </nb-select>
             <div class="case-actions">
-              <button nbButton size="small" status="primary"><nb-icon icon="eye-outline" style="width:1.3rem;"></nb-icon></button>
-              <button nbButton size="small" status="warning"><nb-icon icon="edit-2-outline" style="width:1.3rem;"></nb-icon></button>
-              <button nbButton size="small" status="danger"><nb-icon icon="trash-2-outline" style="width:1.3rem;"></nb-icon></button>
+              <button nbButton size="small" status="warning" (click)="editCase(caso)" ><nb-icon icon="edit-2-outline" style="width:1.3rem;"></nb-icon></button>
+              <button nbButton size="small" status="danger" (click)="deleteCase(caso)"><nb-icon icon="trash-2-outline" style="width:1.3rem;"></nb-icon></button>
             </div>
           </nb-card-footer>
         </nb-card>

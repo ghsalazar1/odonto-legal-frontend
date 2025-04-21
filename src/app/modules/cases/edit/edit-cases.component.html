@@ -1,0 +1,134 @@
+<div class="section" *ngIf="form">
+    <div class="container">
+      <h2 class="title is-4 mb-4">Editar Caso Pericial</h2>
+  
+      <nb-card>
+        <nb-card-body>
+          <form>
+  
+            <!-- Título e Descrição -->
+            <div class="field">
+              <label class="label">Título <span class="has-text-danger">*</span></label>
+              <input nbInput fullWidth placeholder="Título do caso" [(ngModel)]="form.title" name="title" [disabled]="isReadonly" />
+            </div>
+  
+            <div class="field">
+              <label class="label">Descrição <span class="has-text-danger">*</span></label>
+              <textarea nbInput fullWidth placeholder="Detalhes do caso" [(ngModel)]="form.description" name="description" rows="3" [disabled]="isReadonly"></textarea>
+            </div>
+  
+            <!-- Datas -->
+            <div class="columns">
+              <div class="column">
+                <label class="label">Data do Acontecimento <span class="has-text-danger">*</span></label>
+                <input nbInput fullWidth type="date" [(ngModel)]="form.caseDate" name="caseDate" [max]="today" [disabled]="isReadonly" />
+              </div>
+              <div class="column">
+                <label class="label">Data de Abertura <span class="has-text-danger">*</span></label>
+                <input nbInput fullWidth type="date" [(ngModel)]="form.openedAt" name="openedAt" [max]="today" disabled />
+              </div>
+            </div>
+  
+            <!-- Perito Principal -->
+            <div class="field">
+              <label class="label">Perito Principal</label>
+              <nb-select fullWidth [(selected)]="form.peritoPrincipalId" [disabled]="isReadonly">
+                <nb-option *ngFor="let user of availablePeritos()" [value]="user.id">
+                  <nb-user [name]="user.name" [picture]="user.avatar" size="small"></nb-user>
+                </nb-option>
+              </nb-select>
+            </div>
+  
+            <!-- Participantes -->
+            <div class="field">
+              <label class="label">Participantes</label>
+              <input nbInput fullWidth placeholder="🔍 Buscar participante" [(ngModel)]="participantFilter" name="participantFilter" />
+  
+              <div class="tags mt-2 is-flex is-flex-wrap-wrap">
+                <label
+                  class="tag is-rounded is-light is-clickable m-1"
+                  *ngFor="let user of filteredParticipants()"
+                  [class.is-primary]="form.participants.includes(user.id)"
+                  (click)="toggleParticipant(user.id)"
+                >
+                  <nb-user [name]="user.name" [picture]="user.avatar" size="tiny"></nb-user>
+                </label>
+
+              </div>
+            </div>
+  
+            <!-- Evidências Existentes -->
+            <div *ngIf="form.existingEvidences?.length > 0" class="mb-4">
+              <label class="label">Evidências Existentes</label>
+              <div class="columns is-multiline">
+                <div class="column is-12-mobile is-3-tablet" *ngFor="let file of form.existingEvidences">
+                  <nb-card class="p-2 has-text-centered">
+                    <nb-card-body>
+                      <ng-container [ngSwitch]="file.type">
+                        <img *ngSwitchCase="'IMAGE'" [src]="file.contentUrl" class="image is-128x128" style="object-fit: cover;" />
+                        <nb-icon *ngSwitchCase="'AUDIO'" icon="music-outline" class="is-size-1"></nb-icon>
+                        <nb-icon *ngSwitchCase="'DOCUMENT'" icon="file-text-outline" class="is-size-1"></nb-icon>
+                        <nb-icon *ngSwitchDefault icon="file-outline" class="is-size-1"></nb-icon>
+                      </ng-container>
+                      <p class="is-size-7 mt-2">{{ extractFilename(file.contentUrl) }}</p>
+                      <button nbButton size="tiny" status="danger" (click)="removeExistingEvidence(file)">
+                        <nb-icon icon="trash-outline"></nb-icon>
+                      </button>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Novas Evidências -->
+            <div class="field mb-4">
+              <label class="label">Novas Evidências</label>
+              <div class="buttons">
+                <button nbButton status="info" type="button" (click)="capturePhoto()">
+                  <nb-icon icon="camera-outline"></nb-icon> Capturar Foto
+                </button>
+                <input type="file" #fileInput accept="image/*,audio/*,.pdf,.doc,.docx" hidden multiple (change)="onFileSelected($event)" />
+                <button nbButton status="basic" type="button" (click)="fileInput.click()">
+                  <nb-icon icon="cloud-upload-outline"></nb-icon> Adicionar Arquivos
+                </button>
+              </div>
+  
+              <div class="columns is-multiline mt-3">
+                <div class="column is-12-mobile is-3-tablet" *ngFor="let file of form.newEvidences">
+                  <nb-card class="p-2 has-text-centered">
+                    <nb-card-body>
+                      <ng-container [ngSwitch]="file.type">
+                        <img *ngSwitchCase="'image'" [src]="file.preview" class="image is-128x128" style="object-fit: cover;" />
+                        <nb-icon *ngSwitchCase="'application/pdf'" icon="file-text-outline" class="is-size-1"></nb-icon>
+                        <nb-icon *ngSwitchCase="'audio/mpeg'" icon="music-outline" class="is-size-1"></nb-icon>
+                        <nb-icon *ngSwitchDefault icon="file-outline" class="is-size-1"></nb-icon>
+                      </ng-container>
+                      <p class="is-size-7 mt-2">{{ file.name }}</p>
+                      <button nbButton size="tiny" status="danger" (click)="removeNewEvidence(file)">
+                        <nb-icon icon="trash-outline"></nb-icon>
+                      </button>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Botão de salvar -->
+            <div class="has-text-centered mt-5">
+              <button 
+                nbButton 
+                [disabled]="loading || isReadonly || !form.title.trim()"
+                (click)="submitEditCase()"
+                style="background-color: #4BCCA6; border-color: #4BCCA6; color: white; width: 100%; line-height: 2rem;"
+              >
+                <nb-icon icon="checkmark-circle-2-outline"></nb-icon>
+                Salvar Alterações
+              </button>
+            </div>
+  
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  

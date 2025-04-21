@@ -5,5 +5,6 @@ export interface UserDTO {
     name: string;
     email: string;
     roleId: string;
+    avatar: string;
     role: RoleDTO;
 }
