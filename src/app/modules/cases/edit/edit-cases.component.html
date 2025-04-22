@@ -65,7 +65,7 @@
                   <nb-card class="p-2 has-text-centered">
                     <nb-card-body>
                       <ng-container [ngSwitch]="file.type">
-                        <img *ngSwitchCase="'IMAGE'" [src]="file.contentUrl" class="image is-128x128" style="object-fit: cover;" />
+                        <img *ngSwitchCase="'IMAGE'" [src]="getEvidenceUrl(file)" class="image is-128x128" style="object-fit: cover;" />
                         <nb-icon *ngSwitchCase="'AUDIO'" icon="music-outline" class="is-size-1"></nb-icon>
                         <nb-icon *ngSwitchCase="'DOCUMENT'" icon="file-text-outline" class="is-size-1"></nb-icon>
                         <nb-icon *ngSwitchDefault icon="file-outline" class="is-size-1"></nb-icon>

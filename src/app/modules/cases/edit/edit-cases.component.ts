@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CasesService } from '../../../services/cases.service';
 import { UserService } from '../../../services/user.services';
 import { ToastAlert } from '../../../helpers/toast-alert';
+import { Environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-cases',
@@ -18,6 +19,7 @@ export class EditCasesComponent implements OnInit {
   isReadonly = false;
   toast: ToastAlert;
   loading = false;
+  originalExistingEvidences: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +42,16 @@ export class EditCasesComponent implements OnInit {
     });
   }
 
+  getEvidenceUrl(file: any): string {
+    // Em produção, usa signedUrl (Supabase privado)
+    if (Environment.isProduction && file.signedUrl) {
+      return file.signedUrl;
+    }
+  
+    // Em dev/local, usa contentUrl direto (pasta local)
+    return file.contentUrl;
+  }
+
   loadCase() {
     this.casesService.getById(this.caseId).subscribe({
       next: (res) => {
@@ -56,7 +68,9 @@ export class EditCasesComponent implements OnInit {
           existingEvidences: data.existingEvidences ?? [],
           newEvidences: []
         };
-
+  
+        this.originalExistingEvidences = [...data.existingEvidences];
+  
         if (data.status !== 'Em andamento') {
           this.isReadonly = true;
           this.toast.showWarnig('Este caso não pode mais ser editado pois não está em andamento.');
@@ -158,7 +172,11 @@ export class EditCasesComponent implements OnInit {
       return;
     }
 
-    const formData = new FormData();
+    const evidencesToRemove = this.originalExistingEvidences
+    .filter(original => !this.form.existingEvidences.some((ev: { id: any; }) => ev.id === original.id))
+    .map(ev => ev.id);
+
+    const formData = new FormData();  
     formData.append('title', this.form.title);
     formData.append('description', this.form.description);
     formData.append('status', this.form.status);
@@ -177,6 +195,10 @@ export class EditCasesComponent implements OnInit {
 
     this.form.newEvidences.forEach((file: any, index: number) => {
       formData.append(`evidences[${index}]`, file.file, file.name);
+    });
+
+    evidencesToRemove.forEach((id: string) => {
+      formData.append('evidencesToRemove', id);
     });
 
     this.loading = true;
