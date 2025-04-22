@@ -4,6 +4,13 @@ export interface EvidenceInput {
     name: string;
     type: string;
   }
+
+  export interface UserSimpleDTO {
+    id: string;
+    name: string;
+    role: string;
+    avatar: string;
+  }
   
   export interface CaseForm {
     title: string;
@@ -45,7 +52,8 @@ export interface EvidenceInput {
     closedAt: string | null;
   
     peritoPrincipalId: string;
-    participants: string[];
+    peritoPrincipal: UserSimpleDTO;
+    participants: UserSimpleDTO[];
   
     // Evidências já existentes no banco
     existingEvidences: ExistingEvidenceDTO[];

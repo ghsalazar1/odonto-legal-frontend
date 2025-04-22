@@ -63,8 +63,8 @@ export class EditCasesComponent implements OnInit {
           caseDate: data.caseDate?.split('T')[0],
           openedAt: data.openedAt?.split('T')[0],
           closedAt: data.closedAt ? data.closedAt.split('T')[0] : '',
-          peritoPrincipalId: data.peritoPrincipalId ?? '',
-          participants: data.participants?.map((p: any) => p) ?? [],
+          peritoPrincipalId: data?.peritoPrincipal?.id ?? '',
+          participants: data.participants?.map((p: any) => p.id) ?? [],
           existingEvidences: data.existingEvidences ?? [],
           newEvidences: []
         };
