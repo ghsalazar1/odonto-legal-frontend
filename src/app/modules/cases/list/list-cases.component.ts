@@ -113,6 +113,10 @@ export class ListCasesComponent {
     console.log('Status atualizado:', caso);
   }
 
+  redirectToDetails(caso: any){
+    this.router.navigate(['/home/cases/details', caso?.id]);
+  }
+
   deleteCase(caseObj: CaseDTO) {
     Swal.fire({
       title: caseObj?.title,

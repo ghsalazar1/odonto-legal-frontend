@@ -36,7 +36,7 @@
         <nb-card class="case-card equal-height" [ngClass]="getStatusClass(caso.status)">
           <div class="status-bar"></div>
 
-          <nb-card-header>
+          <nb-card-header (click)="redirectToDetails(caso)" style="cursor: pointer;">
             <div class="case-title">{{ caso.title }}</div>
             <div class="custom-badge">
               <nb-icon [icon]="getStatusIcon(caso.status)"></nb-icon>
@@ -44,7 +44,7 @@
             </div>
           </nb-card-header>
 
-          <nb-card-body>
+          <nb-card-body (click)="redirectToDetails(caso)" style="cursor:pointer">
             <div class="case-description">{{ caso.description }}</div>
             <div class="case-meta mt-3">
               <small>Ocorrido: {{ caso.caseDate | date:'dd/MM/yyyy' }}</small><br />

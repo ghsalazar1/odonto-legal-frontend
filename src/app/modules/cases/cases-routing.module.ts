@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListCasesComponent } from './list/list-cases.component';
 import { RegisterCasesComponent } from './register/register-cases.component';
 import { EditCasesComponent } from './edit/edit-cases.component';
+import { CaseDetailsComponent } from './details/case-details.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'edit/:id',
     component: EditCasesComponent,
+  },
+  {
+    path: 'details/:id',
+    component: CaseDetailsComponent,
   },
 ];
 

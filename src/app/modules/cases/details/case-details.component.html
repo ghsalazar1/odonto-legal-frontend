@@ -1,0 +1,99 @@
+<div class="section" *ngIf="caseData">
+  <div class="container">
+    <nb-card>
+      <nb-card-header>
+        <div class="is-flex is-justify-content-space-between is-align-items-center w-100">
+          <h2 class="title is-4 m-0">{{ caseData.title }}</h2>
+          <nb-badge [text]="caseData.status" [status]="getBadgeStatus(caseData.status)"></nb-badge>
+        </div>
+      </nb-card-header>
+
+      <nb-card-body>
+        <!-- Descrição -->
+        <p class="mb-3">{{ caseData.description }}</p>
+
+        <!-- Datas -->
+        <div class="columns is-multiline is-mobile mb-4">
+          <div class="column is-6-tablet is-12-mobile">
+            <strong>Data do Acontecimento:</strong> {{ caseData.caseDate | date:'dd/MM/yyyy' }}
+          </div>
+          <div class="column is-6-tablet is-12-mobile">
+            <strong>Data de Abertura:</strong> {{ caseData.openedAt | date:'dd/MM/yyyy' }}
+          </div>
+          <div class="column is-6-tablet is-12-mobile" *ngIf="caseData.closedAt">
+            <strong>Data de Fechamento:</strong> {{ caseData.closedAt | date:'dd/MM/yyyy' }}
+          </div>
+        </div>
+
+        <!-- Perito -->
+        <div class="mb-4">
+          <strong>Perito Principal:</strong>
+          <div class="mt-1">
+            <nb-user 
+              [name]="caseData.peritoPrincipal?.name" 
+              [title]="caseData.peritoPrincipal?.role?.description || 'Perito'"
+              [picture]="caseData.peritoPrincipal?.avatar || 'assets/img/default-user.png'" 
+              size="medium" 
+              onlyPicture="false">
+            </nb-user>
+          </div>
+        </div>
+
+        <!-- Participantes -->
+        <div class="mb-5">
+          <strong>Participantes:</strong>
+          <div class="tags mt-2 is-flex is-flex-wrap-wrap">
+            <nb-user
+              *ngFor="let user of caseData.participants"
+              [name]="user.name"
+              [title]="user.role?.description || 'Participante'"
+              [picture]="user.avatar || 'assets/img/default-user.png'"
+              size="small"
+              class="m-1">
+            </nb-user>
+          </div>
+        </div>
+
+
+        <!-- Evidências -->
+        <div *ngIf="caseData.existingEvidences?.length > 0">
+          <strong>Evidências:</strong>
+          <div class="columns is-multiline mt-3">
+            <div class="column is-6-tablet is-12-mobile" *ngFor="let evidence of caseData.existingEvidences">
+              <nb-card class="p-3">
+                <div class="is-flex is-align-items-center">
+                  <ng-container [ngSwitch]="evidence.type">
+                    <img
+                      *ngSwitchCase="'IMAGE'"
+                      [src]="getEvidenceUrl(evidence)"
+                      class="image is-96x96 mr-3"
+                      style="object-fit: cover;"
+                    />
+                    <nb-icon *ngSwitchCase="'AUDIO'" icon="music-outline" class="is-size-3 mr-3"></nb-icon>
+                    <nb-icon *ngSwitchCase="'DOCUMENT'" icon="file-text-outline" class="is-size-3 mr-3"></nb-icon>
+                    <nb-icon *ngSwitchDefault icon="file-outline" class="is-size-3 mr-3"></nb-icon>
+                  </ng-container>
+
+                  <div>
+                    <p class="mb-1 is-size-7">{{ extractFilename(evidence.contentUrl) }}</p>
+                    <a
+                      [href]="getEvidenceUrl(evidence)"
+                      target="_blank"
+                      rel="noopener"
+                      download
+                      nbButton
+                      size="tiny"
+                      status="primary"
+                    >
+                      <nb-icon icon="download-outline"></nb-icon> Baixar
+                    </a>
+                  </div>
+                </div>
+              </nb-card>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
