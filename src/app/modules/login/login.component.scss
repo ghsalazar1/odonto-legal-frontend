@@ -117,3 +117,19 @@ nb-toast {
     right: 1rem !important;
   }
 }
+.signup-link {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.create-account-link {
+  color: var(--text-primary-color, #4BCCA6); /* cor personalizada ou fallback */
+  text-decoration: none;
+  margin-left: 0.25rem;
+  font-weight: 500;
+}
+
+.create-account-link:hover {
+  text-decoration: underline;
+}

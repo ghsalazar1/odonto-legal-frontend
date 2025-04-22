@@ -32,10 +32,6 @@
                   <nb-icon icon="google"></nb-icon>
                   Google
                 </button>
-                <button nbButton hero status="info">
-                  <nb-icon icon="facebook"></nb-icon>
-                  Facebook
-                </button>
                 <button nbButton hero status="basic">
                   <nb-icon icon="github"></nb-icon>
                   GitHub
@@ -46,7 +42,12 @@
   
           <nb-card-footer>
             <a href="#" class="forgot">Esqueceu a senha?</a>
-          </nb-card-footer>
+          
+            <div class="signup-link mt-2">
+              <span>Não tem uma conta?</span>
+              <a [routerLink]="['/new-users']" class="create-account-link">Criar agora</a>
+            </div>
+          </nb-card-footer>          
         </nb-card>
       </div>
     </nb-layout-column>
