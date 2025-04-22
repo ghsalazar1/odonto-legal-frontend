@@ -6,9 +6,10 @@ import { RegisterCasesComponent } from './register/register-cases.component';
 import { CasesRoutingModule } from './cases-routing.module';
 import { NbBadgeModule, NbCardModule, NbIconModule, NbInputModule, NbOptionModule, NbSelectModule, NbUserModule } from '@nebular/theme';
 import { EditCasesComponent } from './edit/edit-cases.component';
+import { CaseDetailsComponent } from './details/case-details.component';
 
 @NgModule({
-  declarations: [ListCasesComponent, RegisterCasesComponent, EditCasesComponent],
+  declarations: [ListCasesComponent, RegisterCasesComponent, EditCasesComponent, CaseDetailsComponent],
   imports: [
     CommonModule,
     FormsModule,
