@@ -31,7 +31,7 @@
           <div class="mt-1">
             <nb-user 
               [name]="caseData.peritoPrincipal?.name" 
-              [title]="caseData.peritoPrincipal?.role?.description || 'Perito'"
+              [title]="caseData.peritoPrincipal?.role || 'Perito'"
               [picture]="caseData.peritoPrincipal?.avatar || 'assets/img/default-user.png'" 
               size="medium" 
               onlyPicture="false">
@@ -46,7 +46,7 @@
             <nb-user
               *ngFor="let user of caseData.participants"
               [name]="user.name"
-              [title]="user.role?.description || 'Participante'"
+              [title]="user.role || 'Participante'"
               [picture]="user.avatar || 'assets/img/default-user.png'"
               size="small"
               class="m-1">
