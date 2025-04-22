@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, tap } from 'rxjs';
 import { Environment } from '../../environments/environment';
+import { UserDTO } from '../models/user-model';
+import { ResponseDTO } from '../models/response-dto';
 
 interface LoginResponse {
   accessToken: string;
@@ -25,6 +27,16 @@ export class AuthService {
         }
       })
     );
+  }
+
+  newUsers(payload: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    roleId: string;
+  }): Observable<ResponseDTO<UserDTO>> {
+    return this.http.post<ResponseDTO<UserDTO>>(`${this.apiUrl}/new-users`, payload);
   }
   
 
