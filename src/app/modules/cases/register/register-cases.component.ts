@@ -80,8 +80,8 @@ export class RegisterCasesComponent {
     const files = event.target.files;
 
     for (let file of files) {
-      if (file.size > 900 * 1024) {
-        this.toast.showWarnig(`O arquivo "${file.name}" excede o limite de 900KB.`);
+      if (file.size > 1536 * 1024) {
+        this.toast.showWarnig(`O arquivo "${file.name}" excede o limite de 1.5Mb.`);
         continue;
       }
 
