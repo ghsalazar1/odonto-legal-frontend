@@ -4,6 +4,7 @@ import { CasesService } from '../../../services/cases.service';
 import { CaseDTO } from '../../../models/case-model';
 import Swal from 'sweetalert2';
 import { ToastAlert } from '../../../helpers/toast-alert';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-cases',
@@ -20,9 +21,22 @@ export class ListCasesComponent {
   itemsPerPage = 6;
   toast: ToastAlert;
 
-  constructor(private router: Router, private casesService: CasesService) {
+  showFinalizeModal = false;
+  selectedCase: CaseDTO | null = null;
+  finalizeForm: FormGroup;
+
+  constructor(private router: Router, private casesService: CasesService, private fb: FormBuilder) {
     this.fetchCases();
     this.toast = new ToastAlert();
+
+    this.finalizeForm = this.fb.group({
+      summary: ['', Validators.required],
+      notes: ['', Validators.required]
+    });
+  }
+
+  get caseSelected() {
+    return this.selectedCase;
   }
 
   fetchCases(page = 1, search = '') {
@@ -43,7 +57,6 @@ export class ListCasesComponent {
       }
     });
   }
-  
 
   get totalPages(): number {
     return Math.ceil(this.filteredCasos.length / this.itemsPerPage);
@@ -84,6 +97,20 @@ export class ListCasesComponent {
     this.paginatedCasos = this.filteredCasos.slice(start, end);
   }
 
+  openModal(caso: CaseDTO) {
+    this.selectedCase = caso;
+    this.showFinalizeModal = true;
+    this.finalizeForm.reset();
+  }
+
+  closeModal() {
+    this.showFinalizeModal = false;
+    this.selectedCase = null;
+    this.finalizeForm.reset();
+  }
+  
+  
+
   ngOnInit() {
     this.filteredCasos = [...this.casos];
     this.paginate();
@@ -109,8 +136,58 @@ export class ListCasesComponent {
     return this.getStatusColor(status);
   }
 
-  onStatusChange(caso: any) {
-    console.log('Status atualizado:', caso);
+  onStatusChange(caso: CaseDTO, novoStatus: string) {
+    if (novoStatus === 'Finalizado') {
+      this.openModal(caso);
+    } else if (novoStatus === 'Arquivado') {
+      Swal.fire({
+        title: caso?.title,
+        text: 'Essa ação irá arquivar o caso de forma permanente.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sim, arquivar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.casesService.archive(caso?.id, { reason: '' }).subscribe({
+            next: () => {
+              Swal.fire('Arquivado!', 'O caso foi arquivado com sucesso.', 'success');
+              this.fetchCases();
+            },
+            error: (err) => {
+              const _defaultMessage = 'não foi possível arquivar o caso.';
+              this.toast.showError(err?.error?.message ?? _defaultMessage);
+            }
+          });
+        }
+      });
+    } else {
+      this.closeModal();
+    }
+  }
+  
+
+  confirmFinalizeCase() {
+    if (this.finalizeForm.invalid || !this.selectedCase) return;
+  
+    const payload = {
+      summary: this.finalizeForm.value.summary,
+      notes: this.finalizeForm.value.notes,
+    };
+  
+    this.casesService.finalize(this.selectedCase.id, payload).subscribe({
+      next: () => {
+        this.toast.showSuccess('Caso finalizado e dossiê gerado com sucesso.');
+        this.closeModal();
+        this.fetchCases(); // Recarrega a lista
+      },
+      error: (err) => {
+        const _defaultMessage = 'Erro ao finalizar o caso.';
+        this.toast.showError(err?.error?.message ?? _defaultMessage);
+      }
+    });
   }
 
   redirectToDetails(caso: any){

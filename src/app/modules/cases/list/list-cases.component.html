@@ -56,11 +56,11 @@
           </nb-card-body>
 
           <nb-card-footer class="is-flex is-justify-content-space-between is-align-items-center">
-            <nb-select placeholder="Status" [(selected)]="caso.status" (selectedChange)="onStatusChange(caso)">
+            <nb-select placeholder="Status" [(selected)]="caso.status" (selectedChange)="onStatusChange(caso, $event)">
               <nb-option *ngFor="let s of statusList" [value]="s">{{ s }}</nb-option>
             </nb-select>
             <div class="case-actions">
-              <button nbButton size="small" status="warning" (click)="editCase(caso)" ><nb-icon icon="edit-2-outline" style="width:1.3rem;"></nb-icon></button>
+              <button nbButton size="small" status="warning" (click)="editCase(caso)" style="background-color: #8f897e !important;" ><nb-icon icon="edit-2-outline" style="width:1.3rem;"></nb-icon></button>
               <button nbButton size="small" status="danger" (click)="deleteCase(caso)"><nb-icon icon="trash-2-outline" style="width:1.3rem;"></nb-icon></button>
             </div>
           </nb-card-footer>
@@ -88,5 +88,59 @@
       <div class="legend-item success"><span class="bullet"></span> Finalizado</div>
       <div class="legend-item warning"><span class="bullet"></span> Arquivado</div>
     </div>
+  </div>
+</div>
+
+<!-- ... toda a estrutura existente da listagem acima ... -->
+
+<!-- Modal para Finalizar Caso -->
+<div class="modal" [ngClass]="{'is-active': showFinalizeModal}">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title" style="text-align: center;margin-bottom: 0px;font-weight: bold;;">Finalizar caso {{caseSelected?.title}}</p>
+      <button class="delete" aria-label="close" (click)="closeModal()"></button>
+    </header>
+    <section class="modal-card-body">
+      <form [formGroup]="finalizeForm">
+        <div class="field mb-4">
+          <label class="label">Resumo do Caso <span class="has-text-danger">*</span></label>
+          <textarea
+            nbInput
+            fullWidth
+            rows="3"
+            placeholder="Informe um resumo do caso"
+            formControlName="summary"
+            class="textarea"
+            [class.is-danger]="finalizeForm.controls['summary'].invalid && finalizeForm.controls['summary'].touched">
+          </textarea>
+          <p *ngIf="finalizeForm.controls['summary'].invalid && finalizeForm.controls['summary'].touched" class="help is-danger">
+            O resumo é obrigatório.
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label">Notas do Perito <span class="has-text-danger">*</span></label>
+          <textarea
+            nbInput
+            fullWidth
+            rows="4"
+            placeholder="Observações e anotações do perito"
+            formControlName="notes"
+            class="textarea"
+            [class.is-danger]="finalizeForm.controls['notes'].invalid && finalizeForm.controls['notes'].touched">
+          </textarea>
+          <p *ngIf="finalizeForm.controls['notes'].invalid && finalizeForm.controls['notes'].touched" class="help is-danger">
+            As notas são obrigatórias.
+          </p>
+        </div>
+      </form>
+    </section>
+    <footer class="modal-card-foot is-justify-content-flex-end">
+      <button nbButton status="primary" (click)="confirmFinalizeCase()" style="background-color: #00d68f;border-color: #00d68f;color:white;" [disabled]="finalizeForm.invalid">
+        Finalizar Caso
+      </button>
+      <button nbButton status="basic" (click)="closeModal()">Cancelar</button>
+    </footer>
   </div>
 </div>

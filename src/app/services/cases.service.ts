@@ -7,7 +7,7 @@ import { CaseDTO, FullCaseDTO } from "../models/case-model";
 
 @Injectable({ providedIn: 'root' })
 export class CasesService {
-  
+
   private readonly apiUrl = Environment.BackendURL + '/cases';  
 
   constructor(private http: HttpClient) {}
@@ -27,6 +27,14 @@ export class CasesService {
 
     return this.http.get<ResponseDTO<CaseDTO[]>>(this.apiUrl, { params });
   }
+
+  finalize(id: string, payload: { summary: any; notes: any; }) : Observable<ResponseDTO<CaseDTO>> {
+    return this.http.put<ResponseDTO<CaseDTO>>(`${this.apiUrl}/${id}/finalize`, payload);
+  }  
+
+  archive(id: string, payload: { reason: any; }) : Observable<ResponseDTO<CaseDTO>> {
+    return this.http.put<ResponseDTO<CaseDTO>>(`${this.apiUrl}/${id}/archive`, payload);
+  }  
 
   delete(caseId: string) {
     return this.http.delete(`${this.apiUrl}/${caseId}`);
