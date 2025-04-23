@@ -4,16 +4,18 @@ import { map, Observable, tap } from 'rxjs';
 import { Environment } from '../../environments/environment';
 import { UserDTO } from '../models/user-model';
 import { ResponseDTO } from '../models/response-dto';
+import { TokenService } from './token.service';
 
 interface LoginResponse {
   accessToken: string;
+  user: UserDTO
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly apiUrl = Environment.BackendURL + '/auth';  
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,  private tokenService: TokenService) {}
 
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(
@@ -23,7 +25,7 @@ export class AuthService {
     ).pipe(
       tap((res) => {
         if (res.accessToken) {
-          localStorage.setItem('token', res.accessToken);
+          this.tokenService.Sigin(res?.accessToken, res?.user);
         }
       })
     );
@@ -41,7 +43,7 @@ export class AuthService {
   
 
   logout(): void {
-    localStorage.removeItem('token');  
+    this.tokenService.SignOut();
     this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).subscribe();
   }
   

@@ -4,6 +4,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UserDTO } from '../../models/user-model';
+import { TokenService } from '../../services/token.service';
 
 
 @Component({
@@ -12,29 +14,41 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  sidebarState: NbSidebarState = 'expanded';
+  sidebarState: NbSidebarState = 'collapsed';
 
   userMenu = [
     { title: 'Perfil', icon: 'person-outline' },
     { title: 'Logout', icon: 'log-out-outline' }
   ];
 
-  menuItems = [
-    { title: 'Dashboard', icon: 'home-outline', link: '/home/dashboard' },
-    { title: 'Gestão de Casos', icon: 'folder-outline', link: '/home/cases' },
-    { title: 'Relatórios', icon: 'bar-chart-outline', link: '/home/reports' },
-    { title: 'Usuários', icon: 'people-outline', link: '/home/users' },
-  ];
-
+  menuItems: any[] = [];
   menuSubscription: Subscription;
+  loggedUser: UserDTO;
+
 
   constructor(
     private sidebarService: NbSidebarService,
     private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private router: Router,
-    private menuService: NbMenuService
+    private menuService: NbMenuService,
+    private tokenService: TokenService
   ) {
+
+    this.loggedUser = tokenService.GetUser();
+
+    // Monta dinamicamente o menu
+    this.menuItems = [
+      { title: 'Dashboard', icon: 'home-outline', link: '/home/dashboard' },
+      { title: 'Gestão de Casos', icon: 'folder-outline', link: '/home/cases' },
+      { title: 'Relatórios', icon: 'bar-chart-outline', link: '/home/reports' },
+    ];
+
+    if (this.loggedUser?.role?.description === 'Administrador') {
+      this.menuItems.push({ title: 'Usuários', icon: 'people-outline', link: '/home/users' });
+    }
+
+
     this.breakpointObserver.observe([Breakpoints.Handset])
       .subscribe(result => {
         if (result.matches) {
