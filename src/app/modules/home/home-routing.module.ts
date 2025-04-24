@@ -20,6 +20,11 @@ const routes: Routes = [
           import('../cases/cases.module').then((m) => m.CasesModule),
       },
       {
+        path: 'reports',
+        loadChildren: () =>
+          import('../reports/reports.module').then((m) => m.ReportsModule),
+      },
+      {
         path: 'dashboard',
         loadChildren: () =>
           import('../dashboard/dashboard.module').then((m) => m.DashboardModule),

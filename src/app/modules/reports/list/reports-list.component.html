@@ -1,0 +1,52 @@
+<div class="section">
+    <div class="container">
+      <div class="columns is-vcentered is-mobile mb-4">
+        <div class="column is-8-mobile is-6-tablet">
+          <h2 class="title is-4 mb-2">Relatórios de Dossiê</h2>
+        </div>
+        <div class="column is-4-mobile is-6-tablet has-text-right">
+          <div class="control">
+            <input
+              nbInput
+              fullWidth
+              placeholder="🔍 Filtrar por título, perito ou data"
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearch()"
+            />
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="filteredReports.length === 0" class="has-text-centered mt-6">
+        <nb-icon icon="alert-circle-outline" status="warning"></nb-icon>
+        <p class="mt-2">Nenhum relatório encontrado com os critérios informados.</p>
+      </div>
+  
+      <div class="columns is-multiline" *ngIf="filteredReports.length > 0">
+        <div class="column is-12-mobile is-6-tablet is-4-desktop" *ngFor="let report of filteredReports">
+          <nb-card class="report-card">
+            <nb-card-header>
+              <div class="is-flex is-justify-content-space-between is-align-items-center w-100">
+                <h3 class="is-size-6 has-text-weight-bold">{{ report.case.title }}</h3>
+              </div>
+            </nb-card-header>
+  
+            <nb-card-body>
+              <nb-badge [text]="report.case.status" [status]="getBadgeStatus(report.case.status)"></nb-badge>
+              <p class="is-size-7 mb-2"><strong>Data do Caso:</strong> {{ report.case.caseDate | date:'dd/MM/yyyy' }}</p>
+              <p class="is-size-7 mb-2"><strong>Perito Principal:</strong> {{ report?.case?.peritoPrincipal?.name ?? '-' }}</p>
+              <p class="is-size-7 mb-2"><strong>Participantes:</strong> {{ getParticipantNames(report)}}</p>
+              <p class="is-size-7 mb-2"><strong>Evidências:</strong> {{ report?.evidencesCount ?? '-' }}</p>
+              <p class="is-size-7"><strong>Resumo:</strong> {{ report?.summary ??  '-' }}</p>
+            </nb-card-body>
+  
+            <nb-card-footer class="is-flex is-justify-content-flex-end">
+              <a [href]="report.contentUrl" target="_blank" rel="noopener" nbButton status="primary" size="small">
+                <nb-icon icon="file-text-outline"></nb-icon> Visualizar PDF
+              </a>
+            </nb-card-footer>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+  </div>
