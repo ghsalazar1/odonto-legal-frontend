@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 import { NbBadgeModule, NbCardModule, NbIconModule, NbSpinnerModule } from '@nebular/theme';
-import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -16,8 +15,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     NbBadgeModule,
     CommonModule,
     NbCardModule,
-    NbIconModule,
-    NgApexchartsModule
+    NbIconModule
     
   ],
 })
