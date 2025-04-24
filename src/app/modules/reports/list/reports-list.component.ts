@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ToastAlert } from '../../../helpers/toast-alert';
 import { ReportsService } from '../../../services/reports.service';
 import { ReportDTO } from '../../../models/reports-model';
+import { Environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-reports-list',
@@ -22,6 +23,11 @@ export class ReportsListComponent {
 
   getParticipantNames(report: ReportDTO): string {
     return report?.case?.caseParticipants.map(p => p?.user?.name).join(', ') ?? '-';
+  }
+
+  
+  getEvidenceUrl(url: any): string {
+    return Environment.isProduction ? url : Environment.BackendURL + "/uploads/" +  url;
   }
   
 
