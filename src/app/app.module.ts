@@ -21,6 +21,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './guards/interceptors/jwt.interceptor';
 import { AppRoutingModule } from './app-routing-module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { LoadingViewModule } from './shared/loading-view/loading-view.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +30,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    LoadingViewModule,
     NbThemeModule.forRoot({ name: 'corporate' }),
     HttpClientModule,
     NbSidebarModule.forRoot(),
@@ -44,6 +47,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
 })
 export class AppModule {}

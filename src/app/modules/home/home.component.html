@@ -25,8 +25,8 @@
         <span class="pipe">|</span>
 
         <nb-user
-          name="Nick Jones"
-          [picture]="'https://i.pravatar.cc/300?img=12'"
+          [name]="loggedUser.name"
+          [picture]="loggedUser.avatar || 'assets/img/default-user.png'"
           [nbContextMenu]="userMenu"
           size="medium"
           ></nb-user>

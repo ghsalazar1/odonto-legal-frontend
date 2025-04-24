@@ -42,14 +42,8 @@ export class EditCasesComponent implements OnInit {
     });
   }
 
-  getEvidenceUrl(file: any): string {
-    // Em produção, usa signedUrl (Supabase privado)
-    if (Environment.isProduction && file.signedUrl) {
-      return file.signedUrl;
-    }
-  
-    // Em dev/local, usa contentUrl direto (pasta local)
-    return file.contentUrl;
+  getEvidenceUrl(evidence: any): string {
+    return Environment.isProduction ? evidence?.signedUrl : Environment.BackendURL + evidence?.contentUrl;
   }
 
   loadCase() {
@@ -89,7 +83,7 @@ export class EditCasesComponent implements OnInit {
   }
 
   extractFilename(url: string): string {
-    return url.split('/').pop() ?? '';
+    return url.split('/').pop() ?? 'arquivo';
   }
 
   removeExistingEvidence(file: any) {

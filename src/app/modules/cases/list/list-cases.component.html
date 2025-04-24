@@ -1,10 +1,10 @@
 <div class="case-list-wrapper section">
   <div class="container">
     <div class="columns is-vcentered is-mobile mb-4" style="margin-bottom: 0px !important;">
-      <div class="column is-8-mobile is-6-tablet">
+      <div class="column is-6-mobile is-6-tablet">
         <h2 class="title is-4" style="margin-bottom: .3rem;">Casos Periciais</h2>
       </div>
-      <div class="column is-4-mobile is-6-tablet has-text-right" style="padding-right: 1.5rem;">
+      <div class="column is-6-mobile is-6-tablet has-text-right" style="padding-right: 1.5rem;">
         <button nbButton status="success" (click)="redirectToRegister()">
           <nb-icon icon="plus-circle-outline"></nb-icon>
           Novo Caso
@@ -56,12 +56,12 @@
           </nb-card-body>
 
           <nb-card-footer class="is-flex is-justify-content-space-between is-align-items-center">
-            <nb-select placeholder="Status" [(selected)]="caso.status" (selectedChange)="onStatusChange(caso, $event)">
+            <nb-select placeholder="Status" [disabled]="caso.status === 'Finalizado'|| caso.status === 'Arquivado'" [(selected)]="caso.status" (selectedChange)="onStatusChange(caso, $event)">
               <nb-option *ngFor="let s of statusList" [value]="s">{{ s }}</nb-option>
             </nb-select>
             <div class="case-actions">
-              <button nbButton size="small" status="warning" (click)="editCase(caso)" style="background-color: #8f897e !important;" ><nb-icon icon="edit-2-outline" style="width:1.3rem;"></nb-icon></button>
-              <button nbButton size="small" status="danger" (click)="deleteCase(caso)"><nb-icon icon="trash-2-outline" style="width:1.3rem;"></nb-icon></button>
+              <button nbButton size="small" [disabled]="caso.status === 'Finalizado' || caso.status === 'Arquivado'" status="warning" (click)="editCase(caso)" style="background-color: #8f897e !important;" ><nb-icon icon="edit-2-outline" style="width:1.3rem;"></nb-icon></button>
+              <button nbButton size="small" [disabled]="caso.status === 'Finalizado' || caso.status === 'Arquivado'" status="danger" (click)="deleteCase(caso)"><nb-icon icon="trash-2-outline" style="width:1.3rem;"></nb-icon></button>
             </div>
           </nb-card-footer>
         </nb-card>
