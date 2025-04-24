@@ -61,7 +61,16 @@ export class HomeComponent {
       });
 
       this.menuSubscription = this.menuService.onItemClick()
-      .subscribe(({ item }) => this.onAvatarMenuClick(item));
+      .subscribe(({ tag, item }) => {
+        if (tag === 'menu-sidebar') {
+          // Fecha o menu lateral quando um item for clicado
+          this.sidebarService.collapse('menu-sidebar');
+        }
+    
+        this.onAvatarMenuClick(item); // mantém a lógica atual do menu do usuário
+      });
+
+      this.homeRedirect();
   }
   
 
