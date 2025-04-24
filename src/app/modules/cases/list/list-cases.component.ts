@@ -43,6 +43,9 @@ export class ListCasesComponent {
     this.casesService.fetch(page, this.itemsPerPage, search).subscribe({
       next: (response) => {
         this.casos = response.data;
+        this.casos.map(caso => {
+          caso.originalStatus = caso.status;
+        });
         this.filteredCasos = [...this.casos];
         this.currentPage = response.meta.currentPage;
         this.paginate();
@@ -161,6 +164,10 @@ export class ListCasesComponent {
               this.toast.showError(err?.error?.message ?? _defaultMessage);
             }
           });
+        }
+        else{
+          caso.status = caso.originalStatus;
+          
         }
       });
     } else {

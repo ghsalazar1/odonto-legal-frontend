@@ -29,6 +29,7 @@ export interface EvidenceInput {
     title: string;
     description: string;
     status: 'Em andamento' | 'Finalizado' | 'Arquivado';
+    originalStatus: 'Em andamento' | 'Finalizado' | 'Arquivado';
     caseDate: string;
     openedAt: string;
     closedAt: string | null;
