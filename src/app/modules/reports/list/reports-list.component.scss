@@ -1,0 +1,14 @@
+.report-card {
+    border-radius: 0.75rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .nb-card-body {
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  .nb-card-footer a[nbButton] {
+    text-transform: none;
+    font-weight: 500;
+  }
