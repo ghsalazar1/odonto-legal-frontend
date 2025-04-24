@@ -44,7 +44,7 @@ export class CaseDetailsComponent {
   }
 
   getEvidenceUrl(evidence: any): string {
-    return Environment.isProduction ? evidence.signedUrl : evidence.contentUrl;
+    return Environment.isProduction ? evidence?.signedUrl : Environment.BackendURL + evidence?.contentUrl;
   }
 
   extractFilename(url: string): string {
