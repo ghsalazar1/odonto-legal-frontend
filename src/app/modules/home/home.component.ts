@@ -4,7 +4,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserDTO } from '../../models/user-model';
+import { UserDTO } from '../../shared/models/user-model';
 import { TokenService } from '../../services/token.service';
 
 

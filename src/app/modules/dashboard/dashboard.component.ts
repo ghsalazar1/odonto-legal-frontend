@@ -1,22 +1,85 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
+import { Color, ScaleType } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-    totalCases = 25;
-  finishedCases = 12;
-  archivedCases = 5;
-  reports = 10;
+export class DashboardComponent implements OnInit {
+  userCount = 0;
+  activeCases = 0;
+  archivedCases = 0;
+  reportsCreated = 0;
 
-  evidencesSummary = {
-    IMAGE: 15,
-    AUDIO: 8,
-    PDF: 6,
-    TEXT: 10,
-    OTHER: 3
+  barChartData: any[] = [];
+  pieChartData: any[] = [];
+
+  view: [number, number] = [400, 300];
+
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'Categoria';
+  showYAxisLabel = true;
+  yAxisLabel = 'Quantidade';
+
+  error = false;
+
+  colorScheme: Color = {
+    name: 'custom-scheme',
+    selectable: true,
+    group: ScaleType.Ordinal, 
+    domain: [
+      '#4BCCA6',
+      '#38B29D',
+      '#2F9989',
+      '#267F74',
+      '#1E665F'
+    ],
   };
+
+  constructor(private dashboardService: DashboardService) {}
+
+  ngOnInit(): void {
+    this.loadDashboard();
+  }
+
+  private loadDashboard() {
+    this.dashboardService.getDashboardSummary().subscribe({
+      next: (res) => {
+        if (!res.hasError && res.data) {
+          this.userCount = res.data.userCount;
+          this.activeCases = res.data.activeCases;
+          this.archivedCases = res.data.archivedCases;
+          this.reportsCreated = res.data.reportsCreated;
+
+          this.updateCharts();
+        } else {
+          this.error = true;
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar dashboard:', err);
+        this.error = true;
+      }
+    });
+  }
+
+  private updateCharts() {
+    this.barChartData = [
+      { name: 'Ativos', value: this.activeCases },
+      { name: 'Arquivados', value: this.archivedCases },
+      { name: 'Relatórios', value: this.reportsCreated },
+    ];
+
+    this.pieChartData = [
+      { name: 'Usuários', value: this.userCount },
+      { name: 'Casos', value: this.activeCases + this.archivedCases },
+      { name: 'Relatórios', value: this.reportsCreated },
+    ];
+  }
 }

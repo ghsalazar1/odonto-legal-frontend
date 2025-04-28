@@ -1,75 +1,72 @@
+<div class="dashboard-container">
+  <div class="card-container">
+    <nb-card class="stat-card">
+      <nb-card-header>
+        <i class="bi bi-people-fill"></i> Usuários
+      </nb-card-header>
+      <nb-card-body>
+        <h2>{{ userCount }}</h2>
+      </nb-card-body>
+    </nb-card>
 
-<div class="section">
-  <div class="container">
-    <h2 class="title is-4 mb-5">Dashboard Geral</h2>
+    <nb-card class="stat-card">
+      <nb-card-header>
+        <i class="bi bi-folder-check"></i> Casos Ativos
+      </nb-card-header>
+      <nb-card-body>
+        <h2>{{ activeCases }}</h2>
+      </nb-card-body>
+    </nb-card>
 
-    <div class="columns is-multiline">
-      <div class="column is-12-mobile is-6-tablet is-3-desktop">
-        <nb-card>
-          <nb-card-header class="is-flex is-align-items-center is-justify-content-space-between">
-            <span>Total de Casos</span>
-            <nb-icon icon="folder-outline" pack="eva"></nb-icon>
-          </nb-card-header>
-          <nb-card-body>
-            <h3 class="title is-4">25</h3>
-          </nb-card-body>
-        </nb-card>
-      </div>
+    <nb-card class="stat-card">
+      <nb-card-header>
+        <i class="bi bi-archive-fill"></i> Casos Arquivados
+      </nb-card-header>
+      <nb-card-body>
+        <h2>{{ archivedCases }}</h2>
+      </nb-card-body>
+    </nb-card>
 
-      <div class="column is-12-mobile is-6-tablet is-3-desktop">
-        <nb-card status="success">
-          <nb-card-header class="is-flex is-align-items-center is-justify-content-space-between">
-            <span>Casos Finalizados</span>
-            <nb-icon icon="checkmark-circle-2-outline" pack="eva"></nb-icon>
-          </nb-card-header>
-          <nb-card-body>
-            <h3 class="title is-4">12</h3>
-          </nb-card-body>
-        </nb-card>
-      </div>
+    <nb-card class="stat-card">
+      <nb-card-header>
+        <i class="bi bi-file-earmark-text-fill"></i> Relatórios
+      </nb-card-header>
+      <nb-card-body>
+        <h2>{{ reportsCreated }}</h2>
+      </nb-card-body>
+    </nb-card>
+  </div>
 
-      <div class="column is-12-mobile is-6-tablet is-3-desktop">
-        <nb-card status="warning">
-          <nb-card-header class="is-flex is-align-items-center is-justify-content-space-between">
-            <span>Casos Arquivados</span>
-            <nb-icon icon="archive-outline" pack="eva"></nb-icon>
-          </nb-card-header>
-          <nb-card-body>
-            <h3 class="title is-4">5</h3>
-          </nb-card-body>
-        </nb-card>
-      </div>
+  <div class="charts-container">
+    <nb-card class="chart-card">
+      <nb-card-header>Casos e Relatórios</nb-card-header>
+      <nb-card-body>
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="barChartData"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel">
+        </ngx-charts-bar-vertical>
+      </nb-card-body>
+    </nb-card>
 
-      <div class="column is-12-mobile is-6-tablet is-3-desktop">
-        <nb-card status="info">
-          <nb-card-header class="is-flex is-align-items-center is-justify-content-space-between">
-            <span>Relatórios Emitidos</span>
-            <nb-icon icon="file-text-outline" pack="eva"></nb-icon>
-          </nb-card-header>
-          <nb-card-body>
-            <h3 class="title is-4">10</h3>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
-
-    <div class="columns mt-5">
-      <div class="column is-12">
-        <nb-card>
-          <nb-card-header>
-            <span class="is-size-6 has-text-weight-semibold">Resumo dos Tipos de Evidências</span>
-          </nb-card-header>
-          <nb-card-body>
-            <ul>
-              <li>Imagens: <strong>15</strong></li>
-              <li>Áudios: <strong>8</strong></li>
-              <li>Documentos PDF: <strong>6</strong></li>
-              <li>Textos: <strong>10</strong></li>
-              <li>Outros: <strong>3</strong></li>
-            </ul>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div>
+    <nb-card class="chart-card">
+      <nb-card-header>Distribuição Geral</nb-card-header>
+      <nb-card-body>
+        <ngx-charts-pie-chart
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="pieChartData"
+          [legend]="showLegend">
+        </ngx-charts-pie-chart>
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>

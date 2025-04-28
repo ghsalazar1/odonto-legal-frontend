@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth.service';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   private isRefreshing = false;
+  private isLogin = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -32,7 +33,13 @@ export class JwtInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
 
-        if (error.status === 401 && !this.isRefreshing) {
+        const urlSplitted = error?.url?.split("/") ?? [];
+
+        if(urlSplitted[urlSplitted.length - 1] == 'login'){
+          this.isLogin = true;
+        }
+
+        if (error.status === 401 && !this.isRefreshing && !this.isLogin) {
           this.isRefreshing = true;
 
           return this.authService.refreshAccessToken().pipe(

@@ -18,7 +18,6 @@ export class EditCasesComponent implements OnInit {
   today: string = new Date().toISOString().split('T')[0];
   isReadonly = false;
   toast: ToastAlert;
-  loading = false;
   originalExistingEvidences: any[] = [];
 
   constructor(
@@ -195,7 +194,6 @@ export class EditCasesComponent implements OnInit {
       formData.append('evidencesToRemove', id);
     });
 
-    this.loading = true;
     this.casesService.update(this.caseId, formData).subscribe({
       next: () => {
         this.toast.showSuccess('Caso atualizado com sucesso!');
@@ -208,7 +206,6 @@ export class EditCasesComponent implements OnInit {
         }else{
           this.toast.showError(_defaultMessage);
         }
-        this.loading = false;
       }
     });
   }

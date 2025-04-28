@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Environment } from "../../environments/environment";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { ResponseDTO } from "../models/response-dto";
+import { ResponseDTO } from "../shared/models/response-dto";
 import { Observable } from "rxjs";
-import { CaseDTO, FullCaseDTO } from "../models/case-model";
+import { CaseDTO, FullCaseDTO } from "../shared/models/case-model";
 
 @Injectable({ providedIn: 'root' })
 export class CasesService {

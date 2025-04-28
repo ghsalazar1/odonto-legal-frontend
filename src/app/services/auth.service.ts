@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, tap } from 'rxjs';
 import { Environment } from '../../environments/environment';
-import { UserDTO } from '../models/user-model';
-import { ResponseDTO } from '../models/response-dto';
+import { UserDTO } from '../shared/models/user-model';
+import { ResponseDTO } from '../shared/models/response-dto';
 import { TokenService } from './token.service';
 
 interface LoginResponse {

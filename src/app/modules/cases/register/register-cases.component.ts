@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CasesService } from '../../../services/cases.service';
 import { UserService } from '../../../services/user.services';
-import { CaseForm } from '../../../models/case-model';
+import { CaseForm } from '../../../shared/models/case-model';
 import { ToastAlert } from '../../../helpers/toast-alert';
 import { Router } from '@angular/router';
 

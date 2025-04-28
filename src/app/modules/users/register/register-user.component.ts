@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { RoleDTO } from '../../../models/role-model';
+import { RoleDTO } from '../../../shared/models/role-model';
 import { UserService } from '../../../services/user.services';
 import { Router } from '@angular/router';
-import { UserRegisterModel } from '../../../models/user-register-model';
+import { UserRegisterModel } from '../../../shared/models/user-register-model';
 import { ToastAlert } from '../../../helpers/toast-alert';
 
 @Component({
@@ -16,7 +16,6 @@ export class RegisterUserComponent implements OnInit {
 
   userForm: FormGroup;
   roles: RoleDTO[] = [];
-  loading = false;
   toast: ToastAlert;
   errorMessage: string = '';
 
@@ -54,7 +53,6 @@ export class RegisterUserComponent implements OnInit {
 
     const { name, email, roleId, password } = this.userForm.value;
 
-    this.loading = true;
     this.userService.add({
       name, email, roleId, password,
       confirmPassword: ''
@@ -63,8 +61,7 @@ export class RegisterUserComponent implements OnInit {
         this.router.navigate(['/home/users']);
       },
       error: (err) => {
-        this.loading = false;
-        
+       
         if(err.error){
           this.toast.showWarnig(err.error.message);
         }

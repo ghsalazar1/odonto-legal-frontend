@@ -6,16 +6,11 @@ import { Environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
 
-
-  private readonly apiUrl = Environment.BackendURL + '/reports';  
+  private readonly apiUrl = Environment.BackendURL + '/dashboards';
 
   constructor(private http: HttpClient) {}
 
-  getStats(): Observable<any> {
-    return this.http.get('/api/dashboard/stats');
-  }
-
-  getOverview(): Observable<any> {
-    return this.http.get('/dashboard/overview');
+  getDashboardSummary(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/summary`);
   }
 }

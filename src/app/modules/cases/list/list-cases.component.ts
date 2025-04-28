@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CasesService } from '../../../services/cases.service';
-import { CaseDTO } from '../../../models/case-model';
+import { CaseDTO } from '../../../shared/models/case-model';
 import Swal from 'sweetalert2';
 import { ToastAlert } from '../../../helpers/toast-alert';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -111,8 +111,7 @@ export class ListCasesComponent {
     this.selectedCase = null;
     this.finalizeForm.reset();
   }
-  
-  
+   
 
   ngOnInit() {
     this.filteredCasos = [...this.casos];
@@ -142,6 +141,7 @@ export class ListCasesComponent {
   onStatusChange(caso: CaseDTO, novoStatus: string) {
     if (novoStatus === 'Finalizado') {
       this.openModal(caso);
+      caso.status = caso.originalStatus;
     } else if (novoStatus === 'Arquivado') {
       Swal.fire({
         title: caso?.title,
@@ -167,7 +167,6 @@ export class ListCasesComponent {
         }
         else{
           caso.status = caso.originalStatus;
-          
         }
       });
     } else {
@@ -195,6 +194,11 @@ export class ListCasesComponent {
         this.toast.showError(err?.error?.message ?? _defaultMessage);
       }
     });
+  }
+
+  cancelConfirmCase(){
+    this.fetchCases();
+    this.closeModal();
   }
 
   redirectToDetails(caso: any){
