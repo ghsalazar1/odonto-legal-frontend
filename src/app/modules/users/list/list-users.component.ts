@@ -45,7 +45,10 @@ export class ListUsersComponent implements OnInit {
         this.hasMore = this.currentPage < totalPages;
       },
       error: (err) => {
-        console.error('Erro ao buscar usuários:', err);
+        if(err?.status == 403 && err?.error?.hasError == true){
+          this.toast.showError(err?.error?.message ?? 'não foi possível capturar os usuários.');
+          this.router.navigate(['home/dashboard'])
+        }
       },
       complete: () => {
       }

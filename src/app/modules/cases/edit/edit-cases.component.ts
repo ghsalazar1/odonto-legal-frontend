@@ -35,7 +35,7 @@ export class EditCasesComponent implements OnInit {
   }
 
   loadUsers() {
-    this.userService.getAll().subscribe((res) => {
+    this.userService.getSelectebleUsers().subscribe((res) => {
       this.users = res.data.filter((u: any) => u.role.description !== 'Administrador');
       this.loadCase();
     });

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,10 +43,26 @@ export class DashboardComponent implements OnInit {
     ],
   };
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(private dashboardService: DashboardService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadDashboard();
+  }
+
+  navigateToUsers(){
+    this.router.navigate(['/home/users'])
+  }
+
+  navigateToCases(){
+    this.router.navigate(['/home/cases'], { queryParams: { query: 'Em andamento' } });
+  }
+
+  navigateToArchive(){
+    this.router.navigate(['/home/cases'], { queryParams: { query: 'Arquivado' } });
+  }
+
+  navigateToReports(){
+    this.router.navigate(['home/reports'])
   }
 
   private loadDashboard() {

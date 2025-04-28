@@ -25,6 +25,10 @@ export class UserService {
     return this.http.get<ResponseDTO<UserDTO[]>>(this.apiUrl, { });
   }
 
+  getSelectebleUsers(): Observable<ResponseDTO<UserDTO[]>> {
+    return this.http.get<ResponseDTO<UserDTO[]>>(this.apiUrl + "/selectable", { });
+  }
+
   deleteUser(userId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }

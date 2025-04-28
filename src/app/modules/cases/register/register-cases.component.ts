@@ -41,7 +41,7 @@ export class RegisterCasesComponent {
   }
 
   loadUsers() {
-    this.userService.getAll().subscribe((response) => {
+    this.userService.getSelectebleUsers().subscribe((response) => {
       this.users = response.data.filter((u: any) => u.role.description !== 'Administrador');
     });
   }

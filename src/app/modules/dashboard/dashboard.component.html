@@ -1,6 +1,6 @@
 <div class="dashboard-container">
   <div class="card-container">
-    <nb-card class="stat-card">
+    <nb-card class="stat-card" (click)="navigateToUsers()">
       <nb-card-header>
         <i class="bi bi-people-fill"></i> Usuários
       </nb-card-header>
@@ -9,7 +9,7 @@
       </nb-card-body>
     </nb-card>
 
-    <nb-card class="stat-card">
+    <nb-card class="stat-card" (click)="navigateToCases()">
       <nb-card-header>
         <i class="bi bi-folder-check"></i> Casos Ativos
       </nb-card-header>
@@ -18,7 +18,7 @@
       </nb-card-body>
     </nb-card>
 
-    <nb-card class="stat-card">
+    <nb-card class="stat-card" (click)="navigateToArchive()">
       <nb-card-header>
         <i class="bi bi-archive-fill"></i> Casos Arquivados
       </nb-card-header>
@@ -27,7 +27,7 @@
       </nb-card-body>
     </nb-card>
 
-    <nb-card class="stat-card">
+    <nb-card class="stat-card" (click)="navigateToReports()">
       <nb-card-header>
         <i class="bi bi-file-earmark-text-fill"></i> Relatórios
       </nb-card-header>
