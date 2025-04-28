@@ -13,7 +13,6 @@ export class CaseDetailsComponent {
   caseId: string = '';
   caseData: any = null;
   toast: ToastAlert;
-  loading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,16 +28,13 @@ export class CaseDetailsComponent {
   }
 
   loadCase() {
-    this.loading = true;
     this.casesService.getById(this.caseId).subscribe({
       next: (res: any) => {
         this.caseData = res.data;
-        this.loading = false;
       },
       error: (err: any) => {
         this.toast.showError(err?.error?.message ??  'Erro ao carregar o caso');
         this.router.navigate(['/home/cases']);
-        this.loading = false;
       }
     });
   }

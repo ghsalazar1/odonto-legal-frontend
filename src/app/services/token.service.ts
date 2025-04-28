@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { UserDTO } from "../models/user-model";
+import { UserDTO } from "../shared/models/user-model";
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {

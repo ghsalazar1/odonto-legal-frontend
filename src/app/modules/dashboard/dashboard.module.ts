@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardsRoutingModule } from './dashboard-routing.module';
 import { NbBadgeModule, NbCardModule, NbIconModule, NbSpinnerModule } from '@nebular/theme';
+import { NgxChartsModule } from '@swimlane/ngx-charts'
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -13,9 +14,7 @@ import { NbBadgeModule, NbCardModule, NbIconModule, NbSpinnerModule } from '@neb
     NbIconModule,
     NbSpinnerModule,
     NbBadgeModule,
-    CommonModule,
-    NbCardModule,
-    NbIconModule
+    NgxChartsModule
     
   ],
 })

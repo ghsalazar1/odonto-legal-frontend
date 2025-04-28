@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.services';
 import { ToastAlert } from '../../../helpers/toast-alert';
-import { UserDTO } from '../../../models/user-model';
-import { ResponseDTO } from '../../../models/response-dto';
+import { UserDTO } from '../../../shared/models/user-model';
+import { ResponseDTO } from '../../../shared/models/response-dto';
 
 @Component({
   selector: 'app-edit-user',
@@ -15,7 +15,6 @@ export class EditUserComponent implements OnInit {
 
   userForm!: FormGroup;
   roles: any[] = [];
-  loading = false;
   userId!: string;
   toast: ToastAlert;
 
@@ -81,7 +80,6 @@ export class EditUserComponent implements OnInit {
       delete payload.confirmPassword;
     }
 
-    this.loading = true;
     this.userService.updateUser(this.userId, payload).subscribe({
       next: () => {
         this.toast.showSuccess('Usuário atualizado com sucesso!');
@@ -89,7 +87,6 @@ export class EditUserComponent implements OnInit {
       },
       error: (err) => {
        err?.error?.hasError ? this.toast.showError(err?.error?.message) :   this.toast.showError('Erro ao atualizar usuário.');
-        this.loading = false;
       }
     });
   }

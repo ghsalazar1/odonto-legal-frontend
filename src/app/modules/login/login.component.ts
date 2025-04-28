@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Login } from '../../models/login-model';
+import { Login } from '../../shared/models/login-model';
 import { ToastAlert } from '../../helpers/toast-alert';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';

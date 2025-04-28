@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastAlert } from '../../../helpers/toast-alert';
 import { ReportsService } from '../../../services/reports.service';
-import { ReportDTO } from '../../../models/reports-model';
+import { ReportDTO } from '../../../shared/models/reports-model';
 import { Environment } from '../../../../environments/environment';
 
 @Component({

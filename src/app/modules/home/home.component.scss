@@ -35,7 +35,7 @@ nb-layout-header {
 
       .email-icon {
         font-size: 1.1rem;
-        color: #3366ff;
+        color: #4BCCA6;
       }
 
       .email-text {
@@ -89,6 +89,7 @@ nb-sidebar.custom-sidebar {
   background-color: #f7f9fc;
   border-right: 1px solid #edf1f7;
   color: #1a2138;
+  z-index: 10;
 }
 
 nb-layout-column {

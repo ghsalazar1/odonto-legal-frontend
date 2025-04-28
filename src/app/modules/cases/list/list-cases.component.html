@@ -1,7 +1,7 @@
 <div class="case-list-wrapper section">
   <div class="container">
     <div class="columns is-vcentered is-mobile mb-4" style="margin-bottom: 0px !important;">
-      <div class="column is-6-mobile is-6-tablet">
+      <div class="column is-6-mobile is-6-tablet" style="padding-left: 1rem;;">
         <h2 class="title is-4" style="margin-bottom: .3rem;">Casos Periciais</h2>
       </div>
       <div class="column is-6-mobile is-6-tablet has-text-right" style="padding-right: 1.5rem;">
@@ -140,7 +140,7 @@
       <button nbButton status="primary" (click)="confirmFinalizeCase()" style="background-color: #00d68f;border-color: #00d68f;color:white;" [disabled]="finalizeForm.invalid">
         Finalizar Caso
       </button>
-      <button nbButton status="basic" (click)="closeModal()">Cancelar</button>
+      <button nbButton status="basic" (click)="cancelConfirmCase()">Cancelar</button>
     </footer>
   </div>
 </div>

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { Environment } from '../../environments/environment';
-import { ResponseDTO } from '../models/response-dto';
-import { UserDTO } from '../models/user-model';
-import { RoleDTO } from '../models/role-model';
+import { ResponseDTO } from '../shared/models/response-dto';
+import { UserDTO } from '../shared/models/user-model';
+import { RoleDTO } from '../shared/models/role-model';
 
 interface LoginResponse {
   token: string;

@@ -1,6 +1,9 @@
-<div class="section" *ngIf="form">
+<div class="section" *ngIf="form" style="padding-top: 1rem;">
     <div class="container">
-      <h2 class="title is-4 mb-4">Editar Caso Pericial</h2>
+      <div class="column is-12-mobile is-6-tablet">
+        <button nbButton routerLink="/home/cases" status="basic">Voltar</button>
+      </div>
+      <h2 class="title is-4 mb-4" style="margin-top: 0px;padding-left:1rem;">Editar Caso Pericial</h2>
   
       <nb-card>
         <nb-card-body>
@@ -117,7 +120,7 @@
             <div class="has-text-centered mt-5">
               <button 
                 nbButton 
-                [disabled]="loading || isReadonly || !form.title.trim()"
+                [disabled]="isReadonly || !form.title.trim()"
                 (click)="submitEditCase()"
                 style="background-color: #4BCCA6; border-color: #4BCCA6; color: white; width: 100%; line-height: 2rem;"
               >

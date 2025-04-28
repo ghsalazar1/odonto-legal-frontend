@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.services';
-import { ResponseDTO } from '../../../models/response-dto';
-import { UserDTO } from '../../../models/user-model';
+import { ResponseDTO } from '../../../shared/models/response-dto';
+import { UserDTO } from '../../../shared/models/user-model';
 import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastAlert } from '../../../helpers/toast-alert';
@@ -18,7 +18,6 @@ export class ListUsersComponent implements OnInit {
   currentPage = 1;
   limit = 10;
   hasMore = true;
-  isLoading = false;
   filterForm: any;
   toast: ToastAlert = new ToastAlert();
 
@@ -32,7 +31,6 @@ export class ListUsersComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    this.isLoading = true;
     var fields = this.filterForm.value;
     const params = {
       search: fields.query,
@@ -50,7 +48,6 @@ export class ListUsersComponent implements OnInit {
         console.error('Erro ao buscar usuários:', err);
       },
       complete: () => {
-        this.isLoading = false;
       }
     });
   }
