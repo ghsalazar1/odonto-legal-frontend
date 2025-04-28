@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CasesService } from '../../../services/cases.service';
 import { CaseDTO } from '../../../shared/models/case-model';
 import Swal from 'sweetalert2';
@@ -25,8 +25,7 @@ export class ListCasesComponent {
   selectedCase: CaseDTO | null = null;
   finalizeForm: FormGroup;
 
-  constructor(private router: Router, private casesService: CasesService, private fb: FormBuilder) {
-    this.fetchCases();
+  constructor(private router: Router, private casesService: CasesService, private activatedRoute: ActivatedRoute, private fb: FormBuilder) {
     this.toast = new ToastAlert();
 
     this.finalizeForm = this.fb.group({
@@ -49,6 +48,9 @@ export class ListCasesComponent {
         this.filteredCasos = [...this.casos];
         this.currentPage = response.meta.currentPage;
         this.paginate();
+        if (this.searchTerm) {
+          this.onSearch(); // se o searchTerm estiver preenchido, já filtra
+        }
       },
       error: (err) => {
         const _defaultMessage = 'não foi possível carregar a lista de casos.';
@@ -60,6 +62,7 @@ export class ListCasesComponent {
       }
     });
   }
+  
 
   get totalPages(): number {
     return Math.ceil(this.filteredCasos.length / this.itemsPerPage);
@@ -110,13 +113,18 @@ export class ListCasesComponent {
     this.showFinalizeModal = false;
     this.selectedCase = null;
     this.finalizeForm.reset();
+    this.fetchCases();
   }
    
 
   ngOnInit() {
-    this.filteredCasos = [...this.casos];
-    this.paginate();
+    this.activatedRoute.queryParams.subscribe(params => {
+      const search = params['query'] ?? '';
+      this.searchTerm = search;
+      this.fetchCases(1, this.searchTerm); // Busca a lista já considerando o termo, se houver
+    });
   }
+  
 
   getStatusColor(status: string): string {
     switch (status) {
@@ -161,6 +169,7 @@ export class ListCasesComponent {
             },
             error: (err) => {
               const _defaultMessage = 'não foi possível arquivar o caso.';
+              caso.status = caso.originalStatus;
               this.toast.showError(err?.error?.message ?? _defaultMessage);
             }
           });
@@ -187,17 +196,16 @@ export class ListCasesComponent {
       next: () => {
         this.toast.showSuccess('Caso finalizado e dossiê gerado com sucesso.');
         this.closeModal();
-        this.fetchCases(); // Recarrega a lista
       },
       error: (err) => {
         const _defaultMessage = 'Erro ao finalizar o caso.';
         this.toast.showError(err?.error?.message ?? _defaultMessage);
+        this.fetchCases(); // Recarrega a lista
       }
     });
   }
 
   cancelConfirmCase(){
-    this.fetchCases();
     this.closeModal();
   }
 

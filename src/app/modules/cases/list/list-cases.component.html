@@ -95,11 +95,11 @@
 
 <!-- Modal para Finalizar Caso -->
 <div class="modal" [ngClass]="{'is-active': showFinalizeModal}">
-  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-background" (click)="cancelConfirmCase()"></div>
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title" style="text-align: center;margin-bottom: 0px;font-weight: bold;;">Finalizar caso {{caseSelected?.title}}</p>
-      <button class="delete" aria-label="close" (click)="closeModal()"></button>
+      <button class="delete" aria-label="close" (click)="cancelConfirmCase()"></button>
     </header>
     <section class="modal-card-body">
       <form [formGroup]="finalizeForm">
