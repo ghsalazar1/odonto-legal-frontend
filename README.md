@@ -1,27 +1,135 @@
-# OdontoLegalFrontend
+# Odonto Legal Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.6.
+Frontend da aplicação **Odonto Legal**, desenvolvido em **Angular 18**, com integração a APIs backend e estrutura responsiva moderna.
 
-## Development server
+![Angular](https://img.shields.io/badge/Angular-18-red) ![Bulma](https://img.shields.io/badge/Bulma-CSS-blue) ![Nebular](https://img.shields.io/badge/Nebular-UI-green) ![PWA Ready](https://img.shields.io/badge/PWA-Ready-blueviolet)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🌐 Documentação / Ambiente
 
-## Code scaffolding
+- Desenvolvimento: `http://localhost:4200`
+- Produção: `/dist/odonto-legal-frontend`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 📂 Estrutura do Projeto
 
-## Build
+```
+/src/app/modules/cases       # Gerenciamento de casos
+/src/app/modules/dashboard   # Dashboard principal
+/src/app/modules/login       # Tela de login
+/src/app/modules/home        # Painel principal
+/src/app/services            # Integração com API backend
+/src/app/guards              # Proteção de rotas
+/src/environments            # Arquivos de ambiente (dev/prod)
+/styles.scss                 # Estilos globais
+/angular.json                # Configuração de build e deploy
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🔧 Configuração de Ambientes
 
-## Running unit tests
+| Arquivo | Ambiente | Descrição |
+|:--------|:---------|:----------|
+| `environment.ts` | Desenvolvimento | Usado no `ng serve` |
+| `environment.prod.ts` | Produção | Usado no `ng build --configuration production` |
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 🔧 Parâmetros de Ambiente
 
-## Running end-to-end tests
+| Variável | Descrição |
+|:---------|:----------|
+| `BackendURL` | URL base do backend API |
+| `isProduction` | Booleano de ambiente |
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+**Exemplo (src/environments/environment.ts):**
 
-## Further help
+```typescript
+export const Environment = {
+  BackendURL: 'http://localhost:3000',
+  isProduction: false
+};
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+# 🚀 Como montar o ambiente de desenvolvimento
+
+### 1. Clonar o Repositório
+
+```bash
+git clone <url-do-repo>
+cd odonto-legal-frontend
+```
+
+### 2. Instalar Dependências
+
+```bash
+npm install
+```
+
+### 3. Rodar em Desenvolvimento
+
+```bash
+npm start
+# ou
+ng serve
+```
+
+Acesse no navegador:
+
+```
+http://localhost:4200
+```
+
+### 4. Gerar Build para Produção
+
+```bash
+npm run build
+# ou
+ng build --configuration production
+```
+
+Build será gerado em `/dist/odonto-legal-frontend`.
+
+---
+
+# 📚 Tecnologias e Bibliotecas Utilizadas
+
+| Tecnologia | Finalidade |
+|:------------|:-----------|
+| Angular 18 | Framework SPA principal |
+| Nebular Theme | Componentes UI modernos |
+| Bulma CSS | Layouts responsivos |
+| Bootstrap Icons + Eva Icons | Conjunto de ícones |
+| SweetAlert2 | Alertas personalizados |
+| Ngx-Charts | Gráficos para dashboard |
+| RxJS | Programação reativa |
+| Sass (SCSS) | Estilização modularizada |
+
+---
+
+# 📅 Comandos Rápidos
+
+```bash
+# Instalar dependências
+npm install
+
+# Rodar desenvolvimento
+npm start
+
+# Gerar produção
+npm run build
+```
+
+---
+
+# 🔒 Controle de Acesso
+
+- Proteção de rotas autenticadas via `AuthGuard`
+- Interceptor JWT adicionando token automaticamente nas requisições
+- Toasts visuais de sucesso e erro com `ToastAlert`
+
+# 🛠️ Observações Importantes
+
+- Responsividade garantida por Bulma + Nebular
+- Integração backend via `CasesService`, `DashboardService`, `AuthService`
+- Controle de ambiente 100% baseado em `environment.*.ts`
+- Projeto preparado para ser PWA (Progressive Web App)
+
+---
