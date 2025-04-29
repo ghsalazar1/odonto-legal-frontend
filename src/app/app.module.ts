@@ -18,7 +18,7 @@ import {
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptor } from './guards/interceptors/jwt.interceptor';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { AppRoutingModule } from './app-routing-module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
